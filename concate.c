@@ -10,15 +10,15 @@
 
 char *concatenateStrings(char *dest, char *src)
 {
-    char *p = dest;
+	char *p = dest;
 
-    while (*p)
-        p++;
+	while (*p)
+	p++;
 
-    while (*src)
-        *p++ = *src++;
+	while (*src)
+	*p++ = *src++;
 
-    *p = '\0';
+	*p = '\0';
 
-    return dest;
+	return (dest);
 }
