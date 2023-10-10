@@ -17,5 +17,6 @@
 int convertStringToInt(const char *str);
 int customGetline(char **lnptr, size_t *size, int fd);
 char *numberToString(int n);
+char *concatenateStrings(char *dest, char *src);
 
 #define BUFFER_t 1024
