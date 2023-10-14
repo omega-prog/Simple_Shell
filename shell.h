@@ -29,3 +29,4 @@ int writeToDescriptor(int fd, char *inp, int len);
 int printAliasByKey(alias *head, char *key);
 int handleAliases(char **arg, alias **aliashead);
 int addNewAlias(alias **head, char *key, char *value);
+int change_current_directory(char *path);
