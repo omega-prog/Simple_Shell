@@ -8,7 +8,6 @@
  *
  * Return: 0 on success, -1 on failure
  */
-
 int addNewAlias(alias **head, char *key, char *value)
 {
 	alias *node, *_head;
@@ -67,7 +66,6 @@ int printAllAliases(alias *head)
 	}
 	return (0);
 }
-
 /**
  * printAliasByKey - print contents of a node whose key matches the given key
  * @head: pointer to the first node
@@ -115,11 +113,9 @@ int printAliasByKey(alias *head, char *key)
 	_strcpy(smn, "alias: ");
 	_strcat(smn, key);
 	print_error(smn, NULL, msg);
-	free(msg);
-	free(smn);
+	free(msg), free(smn);
 	return (-1);
 }
-
 /**
  * handleAliases - handle flags for aliases
  * @arg: arguments
@@ -150,8 +146,7 @@ int handleAliases(char **arg, alias **aliashead)
 		addNewAlias(aliashead, tmp[0], tmp[1]);
 		else
 		printAliasByKey(*aliashead, tmp[0]);
-		free_pp(tmp);
-		i++;
+		free_pp(tmp), i++;
 	}
 	}
 	return (0);
