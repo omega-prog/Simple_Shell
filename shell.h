@@ -24,5 +24,6 @@ int compareStrings(char *s1, char *s2);
 char *copyString(char *dest, const char *src);
 char *duplicateString(char *str);
 int getStringLength(const char *str);
+char *tokenizeString(char *str, const char *delimiter, int whichf);
 
 #define BUFFER_t 1024
