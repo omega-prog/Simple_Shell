@@ -8,17 +8,17 @@
 
 int getStringLength(const char *str)
 {
-    int length;
+	int length;
 
-    if (!str)
-        return 0;
+	if (!str)
+	return (0);
 
-    length = 0;
-    while (*str)
-    {
-        str++;
-        length++;
-    }
+	length = 0;
+	while (*str)
+	{
+	str++;
+	length++;
+	}
 
-    return length;
+	return (length);
 }
