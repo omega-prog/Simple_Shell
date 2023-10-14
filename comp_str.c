@@ -10,19 +10,19 @@
 
 int compareStrings(char *s1, char *s2)
 {
-    if (!s1 && s2)
-        return (-1);
-    if (!s2 && s1)
-        return (-1);
+	if (!s1 && s2)
+	return (-1);
+	if (!s2 && s1)
+	return (-1);
 
-    while (*s1)
-    {
-        if (*s1 != *s2)
-            break;
-        s1++, s2++;
-    }
+	while (*s1)
+	{
+	if (*s1 != *s2)
+		break;
+	s1++, s2++;
+	}
 
-    return (*(unsigned char *)s1 - *(unsigned char *)s2);
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
 /**
@@ -35,19 +35,19 @@ int compareStrings(char *s1, char *s2)
 
 int customStringComparison(char *fstring, const char *sub)
 {
-    if (!fstring || !sub)
-        return (-1);
-    if (!*fstring)
-        return (-1);
-    if (_strlen(fstring) < _strlen(sub))
-        return (-1);
-    while (*sub)
-    {
-        if (*sub == *fstring)
-            return (1);
-        sub++;
-    }
-    return (-1);
+	if (!fstring || !sub)
+	return (-1);
+	if (!*fstring)
+	return (-1);
+	if (_strlen(fstring) < _strlen(sub))
+	return (-1);
+	while (*sub)
+	{
+	if (*sub == *fstring)
+		return (1);
+	sub++;
+	}
+	return (-1);
 }
 
 /**
@@ -60,17 +60,17 @@ int customStringComparison(char *fstring, const char *sub)
 
 int alternateStringComparison(char *fstring, const char *sub)
 {
-    if (!fstring || !sub)
-        return (-1);
-    if (!*fstring)
-        return (-1);
-    if (_strlen(fstring) < _strlen(sub))
-        return (-1);
-    while (*sub && *fstring)
-    {
-        if (*sub != *fstring)
-            return (-1);
-        sub++, fstring++;
-    }
-    return (1);
+	if (!fstring || !sub)
+	return (-1);
+	if (!*fstring)
+	return (-1);
+	if (_strlen(fstring) < _strlen(sub))
+	return (-1);
+	while (*sub && *fstring)
+	{
+	if (*sub != *fstring)
+	return (-1);
+	sub++, fstring++;
+	}
+	return (1);
 }
