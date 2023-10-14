@@ -25,5 +25,6 @@ char *copyString(char *dest, const char *src);
 char *duplicateString(char *str);
 int getStringLength(const char *str);
 char *tokenizeString(char *str, const char *delimiter, int whichf);
+int writeToDescriptor(int fd, char *inp, int len);
 
 #define BUFFER_t 1024
