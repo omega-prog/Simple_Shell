@@ -26,5 +26,6 @@ char *duplicateString(char *str);
 int getStringLength(const char *str);
 char *tokenizeString(char *str, const char *delimiter, int whichf);
 int writeToDescriptor(int fd, char *inp, int len);
-
-#define BUFFER_t 1024
+int printAliasByKey(alias *head, char *key);
+int handleAliases(char **arg, alias **aliashead);
+int addNewAlias(alias **head, char *key, char *value);
