@@ -8,16 +8,16 @@
 
 char *duplicateString(char *str)
 {
-    char *copy, *_copy;
+	char *copy, *_copy;
 
-    if (!str)
-        return NULL;
-    copy = _malloc((_strlen(str) + 1) * sizeof(char));
-    _copy = copy;
+	if (!str)
+	return (NULL);
+	copy = _malloc((_strlen(str) + 1) * sizeof(char));
+	_copy = copy;
 
-    while (*str)
-        *_copy++ = *str++;
+	while (*str)
+	*_copy++ = *str++;
 
-    *_copy = '\0';
-    return copy;
+	*_copy = '\0';
+	return (copy);
 }
