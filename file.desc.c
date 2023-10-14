@@ -11,48 +11,48 @@
 
 int writeToDescriptor(int fd, char *inp, int len)
 {
-    static char writeQueue[BUFFER_t];
-    static int queueSize;
-    int i;
+	static char writeQueue[BUFFER_t];
+	static int queueSize;
+	int i;
 
-    if (fd < 0)
-    {
-        queueSize = 0;
-        return -100;
-    }
+	if (fd < 0)
+	{
+	queueSize = 0;
+	return (-100);
+	}
 
-    if (inp)
-    {
-        if ((len + queueSize) >= BUFFER_t)
-        {
-            if (write(fd, writeQueue, BUFFER_t) == -1)
-            {
-                print_error(NULL, NULL, "problem writing");
-                exit(-1);
-            }
-            queueSize = 0;
-        }
+	if (inp)
+	{
+	if ((len + queueSize) >= BUFFER_t)
+	{
+		if (write(fd, writeQueue, BUFFER_t) == -1)
+		{
+		print_error(NULL, NULL, "problem writing");
+		exit(-1);
+		}
+		queueSize = 0;
+	}
 
-        i = 0;
-        while (i < len)
-        {
-            writeQueue[queueSize + i] = inp[i];
-            i++;
-        }
+	i = 0;
+	while (i < len)
+	{
+		writeQueue[queueSize + i] = inp[i];
+		i++;
+	}
 
-        writeQueue[queueSize + i] = '\0';
-        queueSize += len;
-        return 100;
-    }
+	writeQueue[queueSize + i] = '\0';
+	queueSize += len;
+	return (100);
+	}
 
-    if (!inp)
-    {
-        if (write(fd, writeQueue, queueSize) == -1)
-        {
-            print_error(NULL, NULL, "problem writing");
-            exit(-1);
-        }
-    }
+	if (!inp)
+	{
+	if (write(fd, writeQueue, queueSize) == -1)
+	{
+		print_error(NULL, NULL, "problem writing");
+		exit(-1);
+	}
+	}
 
-    return 0;
+	return (0);
 }
