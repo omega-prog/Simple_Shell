@@ -22,5 +22,6 @@ int alternateStringComparison(char *fstring, const char *sub);
 int customStringComparison(char *fstring, const char *sub);
 int compareStrings(char *s1, char *s2);
 char *copyString(char *dest, const char *src);
+char *duplicateString(char *str);
 
 #define BUFFER_t 1024
