@@ -13,7 +13,7 @@ int writeToDescriptor(int fd, char *inp, int len)
 {
 	static char writeQueue[BUFFER_t];
 	static int queueSize;
-	int i;
+	int i = 0;
 
 	if (fd < 0)
 	{
@@ -32,12 +32,9 @@ int writeToDescriptor(int fd, char *inp, int len)
 		}
 		queueSize = 0;
 	}
-
-	i = 0;
 	while (i < len)
 	{
-		writeQueue[queueSize + i] = inp[i];
-		i++;
+		writeQueue[queueSize + i] = inp[i], i++;
 	}
 
 	writeQueue[queueSize + i] = '\0';
@@ -49,8 +46,7 @@ int writeToDescriptor(int fd, char *inp, int len)
 	{
 	if (write(fd, writeQueue, queueSize) == -1)
 	{
-		print_error(NULL, NULL, "problem writing");
-		exit(-1);
+		print_error(NULL, NULL, "problem writing"), exit(-1);
 	}
 	}
 
