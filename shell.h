@@ -18,5 +18,8 @@ int convertStringToInt(const char *str);
 int customGetline(char **lnptr, size_t *size, int fd);
 char *numberToString(int n);
 char *concatenateStrings(char *dest, char *src);
+int alternateStringComparison(char *fstring, const char *sub);
+int customStringComparison(char *fstring, const char *sub);
+int compareStrings(char *s1, char *s2);
 
 #define BUFFER_t 1024
