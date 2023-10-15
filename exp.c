@@ -45,33 +45,20 @@ void expand_environment_variables(char **str)
 			variable = _realloc(variable, _strlen(variable) + 2);
 			variable[i] = *(*str + i);
 			variable[i + 1] = '\0';
-
 			if (!(*str + i + 1))
 			break;
-
 			i++;
 		}
-
 		temp = _malloc(_strlen(variable));
-		_strcpy(temp, variable + 1);
-		replacement = getenv(temp);
+		_strcpy(temp, variable + 1), replacement = getenv(temp);
 
 		if (replacement)
-		{
 			find_and_replace(str, variable, replacement);
-		}
 		else
-		{
 			find_and_replace(str, variable, "");
-		}
 
-		free(variable);
-		free(temp);
-		variable = (char *)_malloc(2);
-		variable[0] = ' ';
-		variable[1] = '\0';
-		temp = NULL;
-		free(variable);
+		free(variable), free(temp), variable = (char *)_malloc(2);
+		variable[0] = ' ', variable[1] = '\0', temp = NULL, free(variable);
 		}
 	}
 		i++;
