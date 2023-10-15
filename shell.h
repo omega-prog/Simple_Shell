@@ -30,3 +30,9 @@ int printAliasByKey(alias *head, char *key);
 int handleAliases(char **arg, alias **aliashead);
 int addNewAlias(alias **head, char *key, char *value);
 int change_current_directory(char *path);
+int custom_putenv(char *es);
+int custom_setenv(cch *name, cch *value, __attribute__((unused))int overwrite);
+int custom_unsetenv(const char *name);
+void custom_printenv(void);
+char *custom_getenv(const char *name);
+
