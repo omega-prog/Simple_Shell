@@ -138,7 +138,7 @@ char *custom_getenv(const char *name)
 
 	if (name == NULL || environ == NULL)
 	return (NULL);
-	for (np = name; *np && *np != '='; ++np);
+	for (np = name; *np && *np != '='; ++np)
 	len = np - name;
 	for (p = environ; (cp = *p) != NULL; ++p)
 	{
