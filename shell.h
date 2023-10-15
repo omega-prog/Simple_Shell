@@ -35,4 +35,4 @@ int custom_setenv(cch *name, cch *value, __attribute__((unused))int overwrite);
 int custom_unsetenv(const char *name);
 void custom_printenv(void);
 char *custom_getenv(const char *name);
-
+void custom_print_error(char *prog, int *cmdr, char *msg);
