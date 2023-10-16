@@ -44,4 +44,9 @@ void free_string_array(char **array);
 void remove_extra_spaces(char **str, char *original);
 void *allocate_memory(unsigned int size);
 void *reallocate_memory(void *ptr, unsigned int size);
+int add_command_node(command_node **head, char *cmd, char *op);
+command_node *build_command_list(char *cmds);
+int print_command_nodes(command_node *head);
+void free_command_list(command_node *head);
+command_node *add_command_node_at_index(command_node **head, char *cmd, char *operator, int pos);
 
