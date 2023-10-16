@@ -24,7 +24,8 @@ char *find_executable_path(char *command_name)
 
 	while (tokenized_path)
 	{
-	full_path = _malloc((_strlen(tokenized_path) + _strlen(command_name) + 1) * sizeof(char));
+	full_path = _malloc((_strlen(tokenized_path) + _strlen(command_name) + 1)
+			* sizeof(char));
 	_strcpy(full_path, tokenized_path);
 	_strcat(full_path, "/");
 	_strcat(full_path, command_name);
