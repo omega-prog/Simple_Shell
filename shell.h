@@ -40,3 +40,8 @@ char *find_executable_path(char *command_name);
 int display_command_history(void);
 int save_command_history(char *command);
 int read_user_input(char **input, size_t *input_len, char ***commands, int file_descriptor);
+void free_string_array(char **array);
+void remove_extra_spaces(char **str, char *original);
+void *allocate_memory(unsigned int size);
+void *reallocate_memory(void *ptr, unsigned int size);
+
