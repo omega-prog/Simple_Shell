@@ -39,68 +39,42 @@ int add_command_node(command_node **head, char *cmd, char *op)
 command_node *build_command_list(char *cmds)
 {
 	char **parsedcmd = NULL, **tmp = NULL, **_parsedcmd = NULL;
-	command_node *head = NULL, *_head = NULL, *tmp2 = NULL, *current, *previous = NULL;
+	command_node *head = NULL, *_head = NULL,
+		*tmp2 = NULL, *current, *previous = NULL;
 	int len, i = 0;
 
-	parse_args(cmds, "||", &parsedcmd, 1);
-	_parsedcmd = parsedcmd;
+	parse_args(cmds, "||", &parsedcmd, 1), _parsedcmd = parsedcmd;
 	len = _arlen(parsedcmd);
-
 	if (len > 0)
 	{
 	while (*_parsedcmd)
-	{
-	add_command_node(&head, *_parsedcmd, (len > 1) ? "||" : "");
-	_parsedcmd++;
-	}
-	free_pp(parsedcmd);
-	_head = head;
-
+		add_command_node(&head, *_parsedcmd, (len > 1) ? "||" : ""), _parsedcmd++;
+	free_pp(parsedcmd), _head = head;
 	while (_head)
 	{
-	parse_args(_head->cmd, "&&", &tmp, 1);
-	len = _arlen(tmp);
-
+	parse_args(_head->cmd, "&&", &tmp, 1), len = _arlen(tmp);
 	if (len > 1)
 	{
 		i = 0;
 		while (tmp[i])
-		{
-		add_command_node(&tmp2, tmp[i], "&&");
-		i++;
-		}
+			add_command_node(&tmp2, tmp[i], "&&"), i++;
 		current = _head->next;
-
 		if (previous)
 		previous->next = tmp2;
 		else
 		head = tmp2;
-
 		while (tmp2->next)
-		{
-		if (!(tmp2->next->next))
-		previous = tmp2;
-
-		tmp2 = tmp2->next;
-		}
-		tmp2->next = current;
-		free(tmp2->op);
-		tmp2->op = _strdup(_head->op);
-		free(_head->cmd);
-		free(_head->op);
-		free(_head);
-		_head = tmp2;
-		tmp2 = NULL;
+			if (!(tmp2->next->next))
+				previous = tmp2, tmp2 = tmp2->next;
+		tmp2->next = current, free(tmp2->op);
+		tmp2->op = _strdup(_head->op), free(_head->cmd);
+		free(_head->op), free(_head), _head = tmp2, tmp2 = NULL;
 	}
 	else
-	{
-	previous = _head;
-	_head = _head->next;
-	}
+		previous = _head, _head = _head->next;
 	free_pp(tmp);
 	}
-	free(previous->op);
-	previous->op = _strdup("");
+	free(previous->op), previous->op = _strdup("");
 	}
 	return (head);
 }
@@ -117,7 +91,7 @@ int print_command_nodes(command_node *head)
 
 	while (head)
 	{
- 	_write(-1, NULL, 0);
+	_write(-1, NULL, 0);
 	_write(1, "cmd ", 4);
 	_write(1, head->cmd, _strlen(head->cmd));
 	_write(1, ", op '", 6);
@@ -126,7 +100,6 @@ int print_command_nodes(command_node *head)
 	_write(1, NULL, 0);
 	head = head->next;
 	}
-
 	return (0);
 }
 
@@ -140,7 +113,7 @@ void free_command_list(command_node *head)
 
 	if (!head)
 	return;
-	
+
 	while (head)
 	{
 	tmp = head;
@@ -161,7 +134,8 @@ void free_command_list(command_node *head)
  *
  * Return: pointer to the added node
  */
-command_node *add_command_node_at_index(command_node **head, char *cmd, char *operator, int pos)
+command_node *add_command_node_at_index(command_node **head,
+		char *cmd, char *operator, int pos)
 {
 	command_node *newNode = _malloc(sizeof(command_node));
 	command_node *current = NULL, *tmp = NULL;
@@ -192,6 +166,5 @@ command_node *add_command_node_at_index(command_node **head, char *cmd, char *op
 	current->next = newNode;
 	newNode->next = tmp;
 	}
-
-       	return (newNode);
+	return (newNode);
 }
