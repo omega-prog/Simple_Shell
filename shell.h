@@ -36,3 +36,5 @@ int custom_unsetenv(const char *name);
 void custom_printenv(void);
 char *custom_getenv(const char *name);
 void custom_print_error(char *prog, int *cmdr, char *msg);
+char *find_executable_path(char *command_name);
+
