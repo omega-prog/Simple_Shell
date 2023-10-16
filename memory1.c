@@ -6,17 +6,17 @@
  */
 void free_string_array(char **array)
 {
-    char **current = array;
+	char **current = array;
 
-    if (!array)
-        return;
+	if (!array)
+	return;
 
-    while (*current)
-    {
-        free(*current);
-        current++;
-    }
-    free(array);
+	while (*current)
+	{
+	free(*current);
+	current++;
+	}
+	free(array);
 }
 
 /**
@@ -26,17 +26,17 @@ void free_string_array(char **array)
  */
 int get_string_array_length(char **array)
 {
-    int length = 0;
+	int length = 0;
 
-    if (!array)
-        return length;
+	if (!array)
+	return (length);
 
-    while (*array)
-    {
-        length++;
-        array++;
-    }
-    return length;
+	while (*array)
+	{
+	length++;
+	array++;
+	}
+	return (length);
 }
 
 /**
@@ -46,48 +46,48 @@ int get_string_array_length(char **array)
  */
 void remove_extra_spaces(char **str, char *original)
 {
-    char *new_str = _malloc(sizeof(char) * 1);
-    char *_str = original, *tmp;
-    int first_space = 1, space_count = 1, index = 0;
+	char *new_str = _malloc(sizeof(char) * 1);
+	char *_str = original, *tmp;
+	int first_space = 1, space_count = 1, index = 0;
 
-    *new_str = '\0';
+	*new_str = '\0';
 
-    while (*_str)
-    {
-        if (*_str == ' ' && first_space)
-            _str++;
-        else if (*_str == ' ' && space_count)
-        {
-            space_count++;
-            _str++;
-        }
-        else if (*_str != ' ')
-        {
-            tmp = _malloc(sizeof(char) * (_strlen(new_str) + 3));
+	while (*_str)
+	{
+	if (*_str == ' ' && first_space)
+		_str++;
+	else if (*_str == ' ' && space_count)
+	{
+		space_count++;
+		_str++;
+	}
+	else if (*_str != ' ')
+	{
+		tmp = _malloc(sizeof(char) * (_strlen(new_str) + 3));
 
-            if (!tmp)
-                exit(-1);
+	if (!tmp)
+		exit(-1);
 
-            _strcpy(tmp, new_str);
+	_strcpy(tmp, new_str);
 
-            if (space_count > 1)
-            {
-                tmp[index] = ' ';
-                index++;
-            }
+	if (space_count > 1)
+	{
+	tmp[index] = ' ';
+	index++;
+	}
 
-            tmp[index] = *_str;
-            tmp[index + 1] = '\0';
-            free(new_str);
-            first_space = 0;
-            space_count = 1;
-            new_str = tmp;
-            index++;
-            _str++;
-        }
-    }
+	tmp[index] = *_str;
+	tmp[index + 1] = '\0';
+	free(new_str);
+	first_space = 0;
+	space_count = 1;
+	new_str = tmp;
+	index++;
+	_str++;
+	}
+	}
 
-    *str = new_str;
+	*str = new_str;
 }
 
 /**
@@ -97,24 +97,24 @@ void remove_extra_spaces(char **str, char *original)
  */
 void *allocate_memory(unsigned int size)
 {
-    char *pointer = malloc(size);
-    void *_pointer = NULL;
-    unsigned int i = 0;
+	char *pointer = malloc(size);
+	void *_pointer = NULL;
+	unsigned int i = 0;
 
-    if (!pointer)
-    {
-        print_error(NULL, NULL, "ERROR ALLOCATING MEMORY");
-        exit(-1);
-    }
+	if (!pointer)
+	{
+	print_error(NULL, NULL, "ERROR ALLOCATING MEMORY");
+	exit(-1);
+	}
 
-    while (i < size)
-    {
-        pointer[i] = '\0';
-        i += 1;
-    }
+	while (i < size)
+	{
+	pointer[i] = '\0';
+	i += 1;
+	}
 
-    _pointer = (void *)pointer;
-    return _pointer;
+	_pointer = (void *)pointer;
+	return (_pointer);
 }
 
 /**
@@ -125,25 +125,25 @@ void *allocate_memory(unsigned int size)
  */
 void *reallocate_memory(void *ptr, unsigned int size)
 {
-    char *_pointer = (char *)allocate_memory(size);
-    char *_ptr = (char *)ptr;
-    void *pointer = NULL;
-    int i = 0;
+	char *_pointer = (char *)allocate_memory(size);
+	char *_ptr = (char *)ptr;
+	void *pointer = NULL;
+	int i = 0;
 
-    if (!_ptr)
-    {
-        pointer = _pointer;
-        return pointer;
-    }
+	if (!_ptr)
+	{
+	pointer = _pointer;
+	return (pointer);
+	}
 
-    while (_ptr[i])
-    {
-        _pointer[i] = _ptr[i];
-        i += 1;
-    }
+	while (_ptr[i])
+	{
+	_pointer[i] = _ptr[i];
+	i += 1;
+	}
 
-    _pointer[i] = '\0';
-    pointer = (void *)_pointer;
-    free(ptr);
-    return pointer;
+	_pointer[i] = '\0';
+	pointer = (void *)_pointer;
+	free(ptr);
+	return (pointer);
 }
