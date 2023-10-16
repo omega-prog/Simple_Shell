@@ -8,29 +8,27 @@
  */
 int add_command_node(command_node **head, char *cmd, char *op)
 {
-    command_node *newNode = _malloc(sizeof(command_node));
-    command_node *current;
+	command_node *newNode = _malloc(sizeof(command_node));
+	command_node *current;
 
-    if (!head)
-        return (-1);
+	if (!head)
+	return (-1);
 
-    newNode->cmd = _strdup(cmd);
-    newNode->op = _strdup(op);
-    newNode->estat = 0;
-    newNode->next = NULL;
+	newNode->cmd = _strdup(cmd);
+	newNode->op = _strdup(op);
+	newNode->estat = 0;
+	newNode->next = NULL;
 
-    if (!*head)
-        *head = newNode;
-    else
-    {
-        current = *head;
-        while (current->next)
-            current = current->next;
-
-        current->next = newNode;
-    }
-
-    return 0;
+	if (!*head)
+	*head = newNode;
+	else
+	{
+	current = *head;
+	while (current->next)
+	current = current->next;
+	current->next = newNode;
+	}
+	return (0);
 }
 
 /**
@@ -40,71 +38,71 @@ int add_command_node(command_node **head, char *cmd, char *op)
  */
 command_node *build_command_list(char *cmds)
 {
-    char **parsedcmd = NULL, **tmp = NULL, **_parsedcmd = NULL;
-    command_node *head = NULL, *_head = NULL, *tmp2 = NULL, *current, *previous = NULL;
-    int len, i = 0;
+	char **parsedcmd = NULL, **tmp = NULL, **_parsedcmd = NULL;
+	command_node *head = NULL, *_head = NULL, *tmp2 = NULL, *current, *previous = NULL;
+	int len, i = 0;
 
-    parse_args(cmds, "||", &parsedcmd, 1);
-    _parsedcmd = parsedcmd;
-    len = _arlen(parsedcmd);
+	parse_args(cmds, "||", &parsedcmd, 1);
+	_parsedcmd = parsedcmd;
+	len = _arlen(parsedcmd);
 
-    if (len > 0)
-    {
-        while (*_parsedcmd)
-        {
-            add_command_node(&head, *_parsedcmd, (len > 1) ? "||" : "");
-            _parsedcmd++;
-        }
-        free_pp(parsedcmd);
-        _head = head;
+	if (len > 0)
+	{
+	while (*_parsedcmd)
+	{
+	add_command_node(&head, *_parsedcmd, (len > 1) ? "||" : "");
+	_parsedcmd++;
+	}
+	free_pp(parsedcmd);
+	_head = head;
 
-        while (_head)
-        {
-            parse_args(_head->cmd, "&&", &tmp, 1);
-            len = _arlen(tmp);
+	while (_head)
+	{
+	parse_args(_head->cmd, "&&", &tmp, 1);
+	len = _arlen(tmp);
 
-            if (len > 1)
-            {
-                i = 0;
-                while (tmp[i])
-                {
-                    add_command_node(&tmp2, tmp[i], "&&");
-                    i++;
-                }
-                current = _head->next;
+	if (len > 1)
+	{
+		i = 0;
+		while (tmp[i])
+		{
+		add_command_node(&tmp2, tmp[i], "&&");
+		i++;
+		}
+		current = _head->next;
 
-                if (previous)
-                    previous->next = tmp2;
-                else
-                    head = tmp2;
+		if (previous)
+		previous->next = tmp2;
+		else
+		head = tmp2;
 
-                while (tmp2->next)
-                {
-                    if (!(tmp2->next->next))
-                        previous = tmp2;
+		while (tmp2->next)
+		{
+		if (!(tmp2->next->next))
+		previous = tmp2;
 
-                    tmp2 = tmp2->next;
-                }
-                tmp2->next = current;
-                free(tmp2->op);
-                tmp2->op = _strdup(_head->op);
-                free(_head->cmd);
-                free(_head->op);
-                free(_head);
-                _head = tmp2;
-                tmp2 = NULL;
-            }
-            else
-            {
-                previous = _head;
-                _head = _head->next;
-            }
-            free_pp(tmp);
-        }
-        free(previous->op);
-        previous->op = _strdup("");
-    }
-    return head;
+		tmp2 = tmp2->next;
+		}
+		tmp2->next = current;
+		free(tmp2->op);
+		tmp2->op = _strdup(_head->op);
+		free(_head->cmd);
+		free(_head->op);
+		free(_head);
+		_head = tmp2;
+		tmp2 = NULL;
+	}
+	else
+	{
+	previous = _head;
+	_head = _head->next;
+	}
+	free_pp(tmp);
+	}
+	free(previous->op);
+	previous->op = _strdup("");
+	}
+	return (head);
 }
 
 /**
@@ -114,22 +112,22 @@ command_node *build_command_list(char *cmds)
  */
 int print_command_nodes(command_node *head)
 {
-    if (!head)
-        return -1;
+	if (!head)
+	return (-1);
 
-    while (head)
-    {
-        _write(-1, NULL, 0);
-        _write(1, "cmd ", 4);
-        _write(1, head->cmd, _strlen(head->cmd));
-        _write(1, ", op '", 6);
-        _write(1, head->op, _strlen(head->op));
-        _write(1, "'\n", 2);
-        _write(1, NULL, 0);
-        head = head->next;
-    }
+	while (head)
+	{
+ 	_write(-1, NULL, 0);
+	_write(1, "cmd ", 4);
+	_write(1, head->cmd, _strlen(head->cmd));
+	_write(1, ", op '", 6);
+	_write(1, head->op, _strlen(head->op));
+	_write(1, "'\n", 2);
+	_write(1, NULL, 0);
+	head = head->next;
+	}
 
-    return 0;
+	return (0);
 }
 
 /**
@@ -138,21 +136,20 @@ int print_command_nodes(command_node *head)
  */
 void free_command_list(command_node *head)
 {
-    command_node *tmp;
+	command_node *tmp;
 
-    if (!head)
-        return;
-
-    while (head)
-    {
-        tmp = head;
-        head = head->next;
-        free(tmp->cmd);
-        free(tmp->op);
-        free(tmp);
-    }
-
-    head = NULL;
+	if (!head)
+	return;
+	
+	while (head)
+	{
+	tmp = head;
+	head = head->next;
+	free(tmp->cmd);
+	free(tmp->op);
+	free(tmp);
+	}
+	head = NULL;
 }
 
 /**
@@ -166,35 +163,35 @@ void free_command_list(command_node *head)
  */
 command_node *add_command_node_at_index(command_node **head, char *cmd, char *operator, int pos)
 {
-    command_node *newNode = _malloc(sizeof(command_node));
-    command_node *current = NULL, *tmp = NULL;
-    int i = 1;
+	command_node *newNode = _malloc(sizeof(command_node));
+	command_node *current = NULL, *tmp = NULL;
+	int i = 1;
 
-    if (!head)
-        return NULL;
+	if (!head)
+	return (NULL);
 
-    newNode->cmd = cmd;
-    newNode->op = operator;
-    newNode->next = NULL;
+	newNode->cmd = cmd;
+	newNode->op = operator;
+	newNode->next = NULL;
 
-    if (!*head)
-    {
-        *head = newNode;
-    }
-    else
-    {
-        current = *head;
+	if (!*head)
+	{
+	*head = newNode;
+	}
+	else
+	{
+	current = *head;
 
-        while (current->next && i < pos)
-        {
-            current = current->next;
-            i++;
-        }
+	while (current->next && i < pos)
+	{
+	current = current->next;
+	i++;
+	}
 
-        tmp = current->next;
-        current->next = newNode;
-        newNode->next = tmp;
-    }
+	tmp = current->next;
+	current->next = newNode;
+	newNode->next = tmp;
+	}
 
-    return newNode;
+       	return (newNode);
 }
