@@ -17,6 +17,7 @@ int save_command_history(char *command)
 	_strcat(filename, "/.shell.history");
 
 	int fd = open(filename, O_RDWR | O_CREAT | O_APPEND, 0640);
+
 	free(filename);
 
 	if (fd < 0)
@@ -58,16 +59,13 @@ int display_command_history(void)
 	filename = _malloc(_strlen(home_directory) + _strlen("/.shell.history") + 4);
 	_strcpy(filename, home_directory);
 	_strcat(filename, "/.shell.history");
-
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	return (1);
-
 	while (bytes_read > 0)
 	{
 	counter++;
 	bytes_read = read(fd, history_line, 1);
-
 	if (bytes_read > 0)
 	{
 	_write(-1, NULL, 0);
@@ -78,23 +76,16 @@ int display_command_history(void)
 	_write(1, NULL, 0);
 	free(index_str);
 	}
-
 	_write(-1, NULL, 0);
-
 	while (bytes_read > 0 && *history_line != '\n')
 	{
 	_write(1, history_line, _strlen(history_line));
 	bytes_read = read(fd, history_line, 1);
 	}
-
 	if (bytes_read > 0 && *history_line == '\n')
 	_write(1, "\n", 1);
-
 	_write(1, NULL, 0);
 	}
-
-	free(filename);
-	free(history_line);
-	close(fd);
-	return (1);
+	free(filename), free(history_line);
+	close(fd), return (1);
 }

@@ -39,3 +39,4 @@ void custom_print_error(char *prog, int *cmdr, char *msg);
 char *find_executable_path(char *command_name);
 int display_command_history(void);
 int save_command_history(char *command);
+int read_user_input(char **input, size_t *input_len, char ***commands, int file_descriptor);
