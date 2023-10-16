@@ -75,7 +75,6 @@ void remove_extra_spaces(char **str, char *original)
 	tmp[index] = ' ';
 	index++;
 	}
-
 	tmp[index] = *_str;
 	tmp[index + 1] = '\0';
 	free(new_str);
@@ -86,7 +85,6 @@ void remove_extra_spaces(char **str, char *original)
 	_str++;
 	}
 	}
-
 	*str = new_str;
 }
 
@@ -146,4 +144,4 @@ void *reallocate_memory(void *ptr, unsigned int size)
 	pointer = (void *)_pointer;
 	free(ptr);
 	return (pointer);
-}
+i
