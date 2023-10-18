@@ -1,3 +1,4 @@
+#include "shell.h"
 /**
  * duplicate_string_array - duplicate an array of strings
  * @src: array to be duplicated

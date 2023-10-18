@@ -151,3 +151,23 @@ int handleAliases(char **arg, alias **aliashead)
 	}
 	return (0);
 }
+/**
+ * freealias - free alias linked list
+ * @head: first node
+ * Return: 0 on sucess -1 on faliure
+ */
+
+int freealias(alias *head)
+{
+	alias *tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		free(head->key);
+		free(head->value);
+		free(head);
+		head = tmp;
+	}
+	return (0);
+}

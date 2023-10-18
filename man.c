@@ -1,3 +1,5 @@
+#include "man.h"
+
 /**
  * display_help - Display help information for shell commands
  * @argument: Command or topic to get help for

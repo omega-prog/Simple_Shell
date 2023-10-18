@@ -1,3 +1,5 @@
+#include "shell.h"
+
 /**
  * add_command_node - add a new command node at the end of the command list
  * @head: pointer to pointer of the first node
