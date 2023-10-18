@@ -57,9 +57,9 @@ int printAllAliases(alias *head)
 	while (head)
 	{
 	writeToDescriptor(-1, NULL, 0);
-	writeToDescriptor(1, head->key, _strlen(head->key));
+	writeToDescriptor(1, head->key, getStringLength(head->key));
 	writeToDescriptor(1, "='", 2);
-	writeToDescriptor(1, head->value, _strlen(head->value));
+	writeToDescriptor(1, head->value, getStringLength(head->value));
 	writeToDescriptor(1, "'\n", 2);
 	writeToDescriptor(1, NULL, 0);
 	head = head->next;
@@ -80,9 +80,9 @@ int printAliasByKey(alias *head, char *key)
 	if (!head)
 	{
 	errno = -5;
-	msg = _malloc(_strlen("not found ") + _strlen(key) + 4);
+	msg = _malloc(getStringLength("not found ") + getStringLength(key) + 4);
 	_strcpy(msg, "not found ");
-	smn = _malloc(_strlen("alias: ") + _strlen(key) + 4);
+	smn = _malloc(getStringLength("alias: ") + getStringLength(key) + 4);
 	_strcpy(smn, "alias: ");
 	_strcat(smn, key);
 	print_error(smn, NULL, msg);
@@ -96,9 +96,9 @@ int printAliasByKey(alias *head, char *key)
 	if (!compareStrings(head->value, key))
 	{
 	writeToDescriptor(-1, NULL, 0);
-	writeToDescriptor(1, head->key, _strlen(head->key));
+	writeToDescriptor(1, head->key, getStringLength(head->key));
 	writeToDescriptor(1, "='", 2);
-	writeToDescriptor(1, head->value, _strlen(head->value));
+	writeToDescriptor(1, head->value, getStringLength(head->value));
 	writeToDescriptor(1, "'\n", 2);
 	writeToDescriptor(1, NULL, 0);
 	return (0);
@@ -107,9 +107,9 @@ int printAliasByKey(alias *head, char *key)
 	}
 
 	errno = -3;
-	msg = _malloc(_strlen("not found ") + _strlen(key) + 4);
+	msg = _malloc(getStringLength("not found ") + getStringLength(key) + 4);
 	_strcpy(msg, "not found ");
-	smn = _malloc(_strlen("alias: ") + _strlen(key) + 4);
+	smn = _malloc(getStringLength("alias: ") + getStringLength(key) + 4);
 	_strcpy(smn, "alias: ");
 	_strcat(smn, key);
 	print_error(smn, NULL, msg);
