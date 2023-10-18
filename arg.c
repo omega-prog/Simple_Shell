@@ -29,7 +29,7 @@ void tokenize_and_parse(char *input, const char *delimiter,
 		i = 0;
 	while ((*parsed_args)[i])
 	{
-		temp_args[i] = _strdup((*parsed_args)[i]);
+		temp_args[i] = duplicateString((*parsed_args)[i]);
 		i++;
 	}
 	free_pp(*parsed_args);
@@ -41,7 +41,7 @@ void tokenize_and_parse(char *input, const char *delimiter,
 	if ((tokenized[0] == '"' && tokenized[getStringLength(tokenized) - 1] == '"') ||
 		(tokenized[0] == '\'' && tokenized[getStringLength(tokenized) - 1] == '\''))
 	{
-		trimmed_arg = _strdup(tokenized + 1);
+		trimmed_arg = duplicateString(tokenized + 1);
 		trimmed_arg[getStringLength(trimmed_arg) - 1] = '\0';
 	}
 
