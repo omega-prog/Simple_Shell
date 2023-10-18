@@ -1,53 +1,62 @@
 #include "shell.h"
 
 /**
- * tokenizeString - tokenize string
- * @str: string to be tokenized
+ * customStrtok - tokenize string
+ * @inputString: string to be tokenized
  * @delimiter: token delimiter
- * @whichf: which strcmp to use, 0 for strcmpd, and 1 for strcmps
+ * @compareFunction: function for string comparison (0 for customStringCompareDelim, 1 for customStringCompare)
  *
  * Return: a character pointer to the current delimited token
  */
-char *tokenizeString(char *str, const char *delimiter, int whichf)
-{
-	static char *save;
-	char *_new = NULL;
-	int i = 0, (*func)(char *, const char *), loc, in_quotes = 0;
 
-	func = (whichf == 0) ? _strcmpd : _strcmps;
-	loc = (whichf) ? _strlen(delimiter) - 1 : 0;
-	if (!str || !*str)
-	{
-	if (!save || !*save)
-	return (NULL);
-	while (in_quotes || (func(save + i, delimiter) != 1 && *(save + i) != '\0'))
-	{
-	if (*(save + i) == '\'' || *(save + i) == '\"')
-		in_quotes = !in_quotes;
-		i++;
-	}
-	if (*(save + i) == '\0')
-	{
-	_new = save;
-	save = NULL;
-	return (_new);
-	}
-	_new = save;
-	*(save + i) = '\0';
-	save = save + i + loc + 1;
-	return (_new);
-	}
-	while (in_quotes || (func(str + i, delimiter) != 1 && *(str + i) != '\0'))
-	{
-	if (*(str + i) == '\'' || *(str + i) == '\"')
-		in_quotes = !in_quotes, i++;
-	}
-	if (*(str + i) == '\0')
-	{
-	save = NULL;
-	return (str);
-	}
-	save = str + i + loc + 1;
-	*(str + i) = '\0';
-	return (str);
+char *customStrtok(char *inputString, const char *delimiter, int compareFunction)
+{
+    static char *savedToken;
+    char *newToken = NULL;
+    int i = 0, (*comparisonFunc)(char *, const char), loc, inQuotes = 0;
+
+    comparisonFunc = (compareFunction == 0) ? customStringCompareDelim : customStringCompare;
+    loc = (compareFunction) ? customStrlen(delimiter) - 1 : 0;
+
+    if (!inputString || !*inputString)
+    {
+        if (!savedToken || !*savedToken)
+            return NULL;
+
+        while (inQuotes || (comparisonFunc(savedToken + i, delimiter) != 1 && *(savedToken + i) != '\0'))
+        {
+            if (*(savedToken + i) == '\'' || *(savedToken + i) == '\"')
+                inQuotes = !inQuotes;
+            i++;
+        }
+
+        if (*(savedToken + i) == '\0')
+        {
+            newToken = savedToken;
+            savedToken = NULL;
+            return newToken;
+        }
+
+        newToken = savedToken;
+        *(savedToken + i) = '\0';
+        savedToken = savedToken + i + loc + 1;
+        return newToken;
+    }
+
+    while (inQuotes || (comparisonFunc(inputString + i, delimiter) != 1 && *(inputString + i) != '\0'))
+    {
+        if (*(inputString + i) == '\'' || *(inputString + i) == '\"')
+            inQuotes = !inQuotes;
+        i++;
+    }
+
+    if (*(inputString + i) == '\0')
+    {
+        savedToken = NULL;
+        return inputString;
+    }
+
+    savedToken = inputString + i + loc + 1;
+    *(inputString + i) = '\0';
+    return inputString;
 }
