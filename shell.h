@@ -88,3 +88,5 @@ int replace_and_count_occurrences(char **str, char *to_replace, char *replace_wi
 int *handle_builtin_commands(char **cmd, alias **aliases);
 
 extern char **environ;
+
+#endif
