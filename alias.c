@@ -15,7 +15,7 @@ int addNewAlias(alias **head, char *key, char *value)
 	if (!head)
 	return (-1);
 
-	node = _malloc(sizeof(alias));
+	node = allocate_memory(sizeof(alias));
 	node->key = _strdup(key);
 	node->value = _strdup(value);
 	node->next = NULL;
