@@ -1,47 +1,47 @@
 #include "shell.h"
+
 /**
- * numberToString - convert a number to a string
+ * intToString - convert an integer to a string
  * @n: the number
- * Return: the string representation of the number
+ * Return: stringized number
  */
 
-char *numberToString(int n)
+char *intToString(int n)
 {
-	int length = num_len((n > 0) ? n : -n);
-	unsigned int num = (n < 0) ? -n : n;
-	char *nums = _malloc(length + 2);
-	int i = 0;
+    int length, j, k, digit1, tmp2, i = 0;
+    unsigned int num;
+    char *nums = customMalloc(numberLength((n > 0) ? n : -1 * n) + 2);
 
-	if (!nums)
-	return (NULL);
+    if (!nums)
+        return (NULL);
+    if (n < 0)
+        n *= -1, *(nums + i) = '-', i++;
+    num = n, length = numberLength(num), j = length - 1;
+    if (num == 0)
+        nums[i] = 48, i++;
+    else
+    {
+        while (j >= 0)
+        {
+            if (num % powerOf(10, j) == 0 && j != 0)
+            {
+                nums[i] = (48 + num / powerOf(10, j)), i++;
+                for (k = j; k > 0; k--)
+                    nums[i] = 48, i++;
+                j = -1;
+            }
+            else
+            {
+                digit1 = num / powerOf(10, j);
+                nums[i] = digit1 + 48, i++;
 
-	if (n < 0)
-	nums[i++] = '-', num *= -1;
-	if (num == 0)
-		nums[i++] = '0';
-	else
-	{
-		while (length >= 0)
-	{
-		if (num % pow_b(10, length) == 0 && length != 0)
-	{
-		nums[i++] = '0' + num / pow_b(10, length);
-		for (int k = length; k > 0; k--)
-		nums[i++] = '0';
-		break;
-	}
-
-	int digit1 = num / pow_b(10, length);
-
-	nums[i++] = '0' + digit1;
-	num -= pow_b(10, length) * digit1;
-
-	if (num_len(num) - length == 1)
-	nums[i++] = '0';
-
-	length--;
-	}
-	}
-
-	return (nums);
+                tmp2 = num;
+                num -= powerOf(10, j) * digit1;
+                if (numberLength(tmp2) - numberLength(num) == 2)
+                    nums[i] = 48, i++, j--;
+                j--;
+            }
+        }
+    }
+    return (nums);
 }
