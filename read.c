@@ -27,7 +27,7 @@ int read_user_input(char **input,
 	}
 
 	(*input)[length - 1] = '\0';
-	parse_arguments(*input, ";", commands, 0);
+	tokenize_and_parse(*input, ";", commands, 0);
 
 	return (length - 1);
 }
