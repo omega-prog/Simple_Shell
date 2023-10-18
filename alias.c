@@ -141,7 +141,7 @@ int handleAliases(char **arg, alias **aliashead)
 	i += 1;
 	while (arg[i])
 	{
-	parse_args(arg[i], "=", &tmp, 0);
+	tokenize_and_parse(arg[i], "=", &tmp, 0);
 		if (get_string_array_length(tmp) > 1)
 		addNewAlias(aliashead, tmp[0], tmp[1]);
 		else
