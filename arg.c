@@ -45,7 +45,7 @@ void tokenize_and_parse(char *input, const char *delimiter,
 		trimmed_arg[getStringLength(trimmed_arg) - 1] = '\0';
 	}
 
-	trim_spaces(&((*parsed_args)[arg_index]), trimmed_arg);
+	remove_extra_spaces(&((*parsed_args)[arg_index]), trimmed_arg);
 	(*parsed_args)[arg_index + 1] = NULL;
 	if (trimmed_arg != tokenized)
 		free(trimmed_arg);
