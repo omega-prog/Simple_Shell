@@ -49,4 +49,7 @@ command_node *build_command_list(char *cmds);
 int print_command_nodes(command_node *head);
 void free_command_list(command_node *head);
 command_node *add_command_node_at_index(command_node **head, char *cmd, char *operator, int pos);
-
+void tokenize_and_parse(char *input, const char *delimiter, char ***parsed_args, int mode);
+int calculate_exponent(unsigned int base, int exponent);
+int execute_shell_script(char *script_path);
+int replace_and_count_occurrences(char **str, char *to_replace, char *replace_with);
