@@ -8,7 +8,7 @@
  * Return: 1 if true, 0 if false
  */
 
-int customStringCompare(char *s1, char *s2)
+int customStringCompares(char *s1, char *s2)
 {
     if (!s1 && s2)
         return (-1);
