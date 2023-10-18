@@ -1,23 +1,23 @@
 #include "shell.h"
 
 /**
- * duplicateString - duplicate a string
- * @str: string to be duplicated
+ * customStrdup - duplicate a string
+ * @originalString: string to be duplicated
  * Return: duplicated string
  */
 
-char *duplicateString(char *str)
+char *customStrdup(char *originalString)
 {
-	char *copy, *_copy;
+    char *copy, *copyPtr;
 
-	if (!str)
-	return (NULL);
-	copy = _malloc((getStringLength(str) + 1) * sizeof(char));
-	_copy = copy;
+    if (!originalString)
+        return NULL;
+    copy = customMalloc((customStrlen(originalString) + 1) * sizeof(char));
+    copyPtr = copy;
 
-	while (*str)
-	*_copy++ = *str++;
+    while (*originalString)
+        *copyPtr = *originalString, originalString += 1, copyPtr += 1;
 
-	*_copy = '\0';
-	return (copy);
+    *copyPtr = '\0';
+    return copy;
 }
