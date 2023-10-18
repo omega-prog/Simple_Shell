@@ -15,14 +15,14 @@ char *customStrtok(char *inputString, const char *delimiter, int compareFunction
     char *newToken = NULL;
     int i = 0, inQuotes = 0;
 
-    int (*comparisonFunc)(char *, const char) = (compareFunction == 0) ? customStringCompareDelim : customStringCompare;
+    int (*comparisonFunc)(char *, const char *) = (compareFunction == 0) ? customStringCompareDelim : customStringCompare;
 
     if (!inputString || !*inputString)
     {
         if (!savedToken || !*savedToken)
             return NULL;
 
-        while (inQuotes || (comparisonFunc(savedToken + i, *delimiter) != 1 && *(savedToken + i) != '\0'))
+        while (inQuotes || (comparisonFunc(savedToken + i, delimiter) != 1 && *(savedToken + i) != '\0'))
         {
             if (*(savedToken + i) == '\'' || *(savedToken + i) == '\"')
                 inQuotes = !inQuotes;
@@ -42,7 +42,7 @@ char *customStrtok(char *inputString, const char *delimiter, int compareFunction
         return newToken;
     }
 
-    while (inQuotes || (comparisonFunc(inputString + i, *delimiter) != 1 && *(inputString + i) != '\0'))
+    while (inQuotes || (comparisonFunc(inputString + i, delimiter) != 1 && *(inputString + i) != '\0'))
     {
         if (*(inputString + i) == '\'' || *(inputString + i) == '\"')
             inQuotes = !inQuotes;
