@@ -15,9 +15,9 @@ int addNewAlias(alias **head, char *key, char *value)
 	if (!head)
 	return (-1);
 
-	node = _malloc(sizeof(alias));
-	node->key = _strdup(key);
-	node->value = _strdup(value);
+	node = allocate_memory(sizeof(alias));
+	node->key = duplicateString(key);
+	node->value = duplicateString(value);
 	node->next = NULL;
 
 	if (!*head)
@@ -29,10 +29,10 @@ int addNewAlias(alias **head, char *key, char *value)
 	_head = *head;
 	while (_head->next)
 	{
-	if (!_strcmp(_head->key, key))
+	if (!compareStrings(_head->key, key))
 	{
 	free(_head->value);
-	_head->value = _strdup(value);
+	_head->value = duplicateString(value);
 	freealias(node);
 	return (0);
 	}
@@ -93,7 +93,7 @@ int printAliasByKey(alias *head, char *key)
 
 	while (head)
 	{
-	if (!_strcmp(head->value, key))
+	if (!compareStrings(head->value, key))
 	{
 	_write(-1, NULL, 0);
 	_write(1, head->key, _strlen(head->key));
