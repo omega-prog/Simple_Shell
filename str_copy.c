@@ -1,21 +1,21 @@
 #include "shell.h"
 
 /**
- * copyString - copy string
- * @dest: destination string
- * @src: source string
+ * customStrcpy - copy string
+ * @destination: destination string
+ * @source: source string
  *
- * Return: dest
+ * Return: destination
  */
 
-char *copyString(char *dest, const char *src)
+char *customStrcpy(char *destination, char *source)
 {
-	char *ptr = dest;
+    char *ptr = destination;
 
-	if (!dest)
-	return (NULL);
-	while (*src)
-	*dest++ = *src++;
-	*dest = '\0';
-	return (ptr);
+    if (!destination)
+        return (NULL);
+    while (*source)
+        *destination++ = *source++;
+    *destination = '\0';
+    return (ptr);
 }
