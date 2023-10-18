@@ -20,7 +20,7 @@ void tokenize_and_parse(char *input, const char *delimiter,
 
 	while (tokenized != NULL)
 	{
-	temp_args = (char **)_malloc((_arlen(*parsed_args) + 2) * sizeof(char *));
+	temp_args = (char **)allocate_memory((get_string_array_length(*parsed_args) + 2) * sizeof(char *));
 
 	if (!*parsed_args)
 		*parsed_args = temp_args;
