@@ -146,7 +146,7 @@ int handleAliases(char **arg, alias **aliashead)
 		addNewAlias(aliashead, tmp[0], tmp[1]);
 		else
 		printAliasByKey(*aliashead, tmp[0]);
-		free_pp(tmp), i++;
+		free_string_array(tmp), i++;
 	}
 	}
 	return (0);
