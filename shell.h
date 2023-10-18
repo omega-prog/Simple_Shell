@@ -45,7 +45,7 @@ typedef struct alias
 } alias;
 
 void moveCommand(cmdnode **, int);
-int executeCommand(char **, int, alias **);
+int executeCommands(char **, int, alias **);
 
 char *getFilePath(char *);
 void parseArguments(char *, const char *, char ***, int);
@@ -73,7 +73,7 @@ int findAndReplace(char **, char *, char *);
 int customStrlen(const char *);
 char *customStrcat(char *, char *);
 char *customStrdup(char *);
-int customStringCompare(char *, char *);
+int customStringCompares(char *, char *);
 char *customStrcpy(char *, char *);
 
 int customPutenv(char *);
