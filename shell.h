@@ -53,3 +53,4 @@ void tokenize_and_parse(char *input, const char *delimiter, char ***parsed_args,
 int calculate_exponent(unsigned int base, int exponent);
 int execute_shell_script(char *script_path);
 int replace_and_count_occurrences(char **str, char *to_replace, char *replace_with);
+int *handle_builtin_commands(char **cmd, alias **aliases);
