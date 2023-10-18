@@ -12,7 +12,7 @@ char *duplicateString(char *str)
 
 	if (!str)
 	return (NULL);
-	copy = _malloc((_strlen(str) + 1) * sizeof(char));
+	copy = _malloc((getStringLength(str) + 1) * sizeof(char));
 	_copy = copy;
 
 	while (*str)
