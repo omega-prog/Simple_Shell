@@ -86,6 +86,8 @@ int calculate_exponent(unsigned int base, int exponent);
 int execute_shell_script(char *script_path);
 int replace_and_count_occurrences(char **str, char *to_replace, char *replace_with);
 int *handle_builtin_commands(char **cmd, alias **aliases);
+int freealias(alias *head);
+int get_string_array_length(char **array);
 
 extern char **environ;
 
