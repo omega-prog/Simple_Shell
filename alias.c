@@ -56,12 +56,12 @@ int printAllAliases(alias *head)
 
 	while (head)
 	{
-	_write(-1, NULL, 0);
-	_write(1, head->key, _strlen(head->key));
-	_write(1, "='", 2);
-	_write(1, head->value, _strlen(head->value));
-	_write(1, "'\n", 2);
-	_write(1, NULL, 0);
+	writeToDescriptor(-1, NULL, 0);
+	writeToDescriptor(1, head->key, _strlen(head->key));
+	writeToDescriptor(1, "='", 2);
+	writeToDescriptor(1, head->value, _strlen(head->value));
+	writeToDescriptor(1, "'\n", 2);
+	writeToDescriptor(1, NULL, 0);
 	head = head->next;
 	}
 	return (0);
@@ -95,12 +95,12 @@ int printAliasByKey(alias *head, char *key)
 	{
 	if (!compareStrings(head->value, key))
 	{
-	_write(-1, NULL, 0);
-	_write(1, head->key, _strlen(head->key));
-	_write(1, "='", 2);
-	_write(1, head->value, _strlen(head->value));
-	_write(1, "'\n", 2);
-	_write(1, NULL, 0);
+	writeToDescriptor(-1, NULL, 0);
+	writeToDescriptor(1, head->key, _strlen(head->key));
+	writeToDescriptor(1, "='", 2);
+	writeToDescriptor(1, head->value, _strlen(head->value));
+	writeToDescriptor(1, "'\n", 2);
+	writeToDescriptor(1, NULL, 0);
 	return (0);
 	}
 	head = head->next;
