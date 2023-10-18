@@ -32,7 +32,7 @@ int add_alias(alias **head, char *key, char *value)
     {
         if (customStringCompares(_head->key, key) == 0)
         {
-            customFree(_head->value);
+            free(_head->value);
             _head->value = customStrdup(value);
             freeAlias(node);
             return (0);
@@ -87,13 +87,13 @@ int print_alias(alias *head, char *key)
         smn = customMalloc(customStrlen("alias: ") + customStrlen(key) + 4);
         customStrcpy(smn, "alias: "), customStrcat(smn, key);
         printErrorMessage(smn, NULL, msg);
-        Free(msg), customFree(smn);
+        free(msg), free(smn);
         return (-1);
     }
 
     while (head)
     {
-        if (customStrcmp(head->key, key) == 0)
+        if (customStringCompares(head->key, key) == 0)
         {
             customWrite(-1, NULL, 0);
             customWrite(1, head->key, customStrlen(head->key));
@@ -112,7 +112,7 @@ int print_alias(alias *head, char *key)
     smn = customMalloc(customStrlen("alias: ") + customStrlen(key) + 4);
     customStrcpy(smn, "alias: "), customStrcat(smn, key);
     printErrorMessage(smn, NULL, msg);
-    Free(msg), Free(smn);
+    free(msg), free(smn);
     return (-1);
 }
 
@@ -166,9 +166,9 @@ int freealias(alias *head)
     while (head)
     {
         tmp = head->next;
-        customFree(head->key);
-        customFree(head->value);
-        customFree(head);
+        free(head->key);
+        free(head->value);
+        free(head);
         head = tmp;
     }
     return (0);
