@@ -1,30 +1,27 @@
 #include "shell.h"
 
 /**
- * convertStringToInt - convert string to integer
- * @str: the string
+ * customAtoi - convert string to integer
+ * @s: the string
  * Return: integer
  */
-int convertStringToInt(const char *str)
+
+int customAtoi(char *s)
 {
-	int num = 0;
-	int sign = 1;
-	int started = 0;
+    unsigned int num = 0, sign = 1, started = 0;
 
-	while (*str)
-		{
-		if (started && !isdigit(*str))
-			break;
-
-			if (*str == '-')
-			sign = -1;
-
-		if (isdigit(*str))
-		{
-			started = 1;
-			num = num * 10 + (*str - '0');
-		}
-			str++;
-		}
-	return (sign * num);
+    while (*s)
+    {
+        if (started && !(*s >= '0' && *s <= '9'))
+            break;
+        if (*s == '-')
+            sign *= -1;
+        if ((*s >= '0' && *s <= '9'))
+        {
+            started = 1;
+            num =  num * 10 + (int)*s - 48;
+        }
+        s++;
+    }
+    return (sign * num);
 }
