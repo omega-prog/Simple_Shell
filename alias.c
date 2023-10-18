@@ -126,7 +126,7 @@ int printAliasByKey(alias *head, char *key)
 
 int handleAliases(char **arg, alias **aliashead)
 {
-	int argc = _arlen(arg);
+	int argc = get_string_array_length(arg);
 	int i = 0;
 	char **tmp = NULL;
 
@@ -142,7 +142,7 @@ int handleAliases(char **arg, alias **aliashead)
 	while (arg[i])
 	{
 	parse_args(arg[i], "=", &tmp, 0);
-		if (_arlen(tmp) > 1)
+		if (get_string_array_length(tmp) > 1)
 		addNewAlias(aliashead, tmp[0], tmp[1]);
 		else
 		printAliasByKey(*aliashead, tmp[0]);
