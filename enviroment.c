@@ -15,21 +15,24 @@ int custom_putenv(char *es)
 	while (*custom_environ)
 	len++, custom_environ++;
 
-	new_custom_environ = _malloc(sizeof(char *) * (len + 4));
+	new_custom_environ = allocate_memory
+	(sizeof(char *) * (len + 4));
 	custom_environ_ptr = new_custom_environ;
 	custom_environ = environ;
 	while (len)
 	{
-	*_new_custom_environ = _malloc(sizeof(char) * _strlen(*custom_environ) + 4);
-	_strcpy(*_new_custom_environ, *_custom_environ);
+	*_new_custom_environ = allocate_memory
+	(sizeof(char) * getStringLength(*custom_environ) + 4);
+	copyString(*_new_custom_environ, *_custom_environ);
 	_new_custom_environ++, _custom_environ++, len--;
 	}
-	*_new_custom_environ = _malloc(sizeof(char) * _strlen(es) + 4);
-	_strcpy(*_new_custom_environ, es);
+	*_new_custom_environ = allocate_memory
+	(sizeof(char) * getStringLength(es) + 4);
+	copyString(*_new_custom_environ, es);
 	free(es);
 	_new_custom_environ++;
 	*_new_custom_environ = NULL;
-	free_pp(environ);
+	free_string_array(environ);
 	environ = new_custom_environ;
 	return (0);
 }
@@ -51,28 +54,30 @@ int custom_setenv(cch *name, cch *value, __attribute__((unused))int overwrite)
 
 	if (environ)
 	{
-	ep = _arrdup(environ);
+	ep = duplicate_string_array(environ);
 	while (ep[i])
 	{
-		var = _strtok(ep[i], "=", 0);
-		if (!_strcmp(var, (char *)name))
+		var = tokenizeString(ep[i], "=", 0);
+		if (!compareStrings(var, (char *)name))
 		{
 		free(environ[i]);
-		environ[i] = _malloc(_strlen(name) + _strlen(value) + 4);
-		_strcpy(environ[i], (char *)name);
-		_strcat(environ[i], "=");
-		_strcat(environ[i], (char *)value);
-		free_pp(ep);
+		environ[i] = allocate_memory
+		(getStringLength(name) + getStringLength(value) + 4);
+		copyString(environ[i], (char *)name);
+		concatenateStrings(environ[i], "=");
+		concatenateStrings(environ[i], (char *)value);
+		free_string_array(ep);
 		return (0);
 		}
 		i++;
 	}
-	free_pp(ep);
+	free_string_array(ep);
 	}
-	es = _malloc(_strlen(name) + _strlen(value) + 2);
+	es = allocate_memory
+	(getStringLength(name) + getStringLength(value) + 2);
 	if (es == NULL)
 	return (-1);
-	_strcpy(es, (char *)name), _strcat(es, "="), _strcat(es, (char *)value);
+	copyString(es, (char *)name), concatenateStrings(es, "="), concatenateStrings(es, (char *)value);
 	return ((custom_putenv(es) != 0) ? -1 : 0);
 	free(es);
 }
@@ -88,21 +93,22 @@ int custom_unsetenv(const char *name)
 
 	if (name == NULL || name[0] == '\0')
 	return (-1);
-	ep = _arrdup(environ);
-	free_pp(environ);
-	environ = _malloc(sizeof(char *));
+	ep = duplicate(environ);
+	free_string_array(environ);
+	environ = allocate_memory
+	(sizeof(char *));
 
 	for (sp = ep; *sp != NULL;)
 	{
-	var = _strtok(*sp, "=", 0);
-	if (_strcmp(var, (char *)name))
+	var = tokenizeString(*sp, "=", 0);
+	if (compareStrings(var, (char *)name))
 	{
-		value = _strtok(NULL, "=", 0);
+		value = tokenizeString(NULL, "=", 0);
 		custom_setenv(var, value, 1);
 	}
 		sp++;
 	}
-	free_pp(ep);
+	free_string_array(ep);
 	return (0);
 }
 
@@ -115,10 +121,10 @@ void custom_printenv(void)
 
 	if (!custom_env)
 	return;
-	_write(-1, NULL, 0);
+	writeToDescriptor(-1, NULL, 0);
 	while (*custom_env)
 	{
-	write(1, *custom_env, _strlen(*custom_env));
+	write(1, *custom_env, getStringLength(*custom_env));
 	write(1, "\n", 1);
 	custom_env++;
 	}
