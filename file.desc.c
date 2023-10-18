@@ -11,7 +11,7 @@
 
 int customWrite(int fd, char *inputString, int length)
 {
-    static char writeBuffer[BUFFER_t];
+    static char writeQueue[BUFFER_SIZE];
     static int queueLength;
     int i;
 
@@ -23,11 +23,11 @@ int customWrite(int fd, char *inputString, int length)
 
     if (inputString)
     {
-        if ((length + queueLength) >= BUFFER_t)
+        if ((length + queueLength) >= BUFFER_SIZE)
         {
-            if (write(fd, writeBuffer, BUFFER_t) == -1)
+            if (write(fd, writeQueue, BUFFER_SIZE) == -1)
             {
-                print_error(NULL, NULL, "problem writing");
+                printErrorMessage(NULL, NULL, "problem writing");
                 exit(-1);
             }
             queueLength = 0;
@@ -36,20 +36,20 @@ int customWrite(int fd, char *inputString, int length)
         i = 0;
         while (i < length)
         {
-            writeBuffer[queueLength + i] = inputString[i];
+            writeQueue[queueLength + i] = inputString[i];
             i++;
         }
 
-        writeBuffer[queueLength + i] = '\0';
+        writeQueue[queueLength + i] = '\0';
         queueLength += length;
         return (100);
     }
 
     if (!inputString)
     {
-        if (write(fd, writeBuffer, queueLength) == -1)
+        if (write(fd, writeQueue, queueLength) == -1)
         {
-            print_error(NULL, NULL, "problem writing");
+            printErrorMessage(NULL, NULL, "problem writing");
             exit(-1);
         }
     }
