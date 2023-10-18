@@ -1,24 +1,24 @@
 #include "shell.h"
 
 /**
- * getStringLength - return length of string
- * @str: the string
- * Return: length of string
+ * customStrlen - return length of string
+ * @inputString: the string
+ * Return: length of the string
  */
 
-int getStringLength(const char *str)
+int customStrlen(const char *inputString)
 {
-	int length;
+    int stringLength;
 
-	if (!str)
-	return (0);
+    if (!inputString)
+        return 0;
 
-	length = 0;
-	while (*str)
-	{
-	str++;
-	length++;
-	}
+    stringLength = 0;
+    while (*inputString)
+    {
+        inputString += 1;
+        stringLength += 1;
+    }
 
-	return (length);
+    return stringLength;
 }
