@@ -1,3 +1,5 @@
+#include "shell.h"
+
 /**
  * remove_alias_node - remove an alias node with a specific key from a link li
  * @head: pointer to the first node of the alias list
