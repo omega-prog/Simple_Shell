@@ -17,7 +17,7 @@ int read_user_input(char **input,
 	if (isatty(0) && !file_descriptor)
 	write(1, "$ ", 2);
 
-	length = _getline(input, input_len, file_descriptor);
+	length = customGetline(input, input_len, file_descriptor);
 
 	if (length == -1)
 	{
