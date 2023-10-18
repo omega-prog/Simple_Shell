@@ -39,7 +39,7 @@ int customStringComparison(char *fstring, const char *sub)
 	return (-1);
 	if (!*fstring)
 	return (-1);
-	if (_strlen(fstring) < _strlen(sub))
+	if (getStringLength(fstring) < getStringLength(sub))
 	return (-1);
 	while (*sub)
 	{
@@ -64,7 +64,7 @@ int alternateStringComparison(char *fstring, const char *sub)
 	return (-1);
 	if (!*fstring)
 	return (-1);
-	if (_strlen(fstring) < _strlen(sub))
+	if (getStringLength(fstring) < getStringLength(sub))
 	return (-1);
 	while (*sub && *fstring)
 	{
