@@ -30,11 +30,11 @@ int add_alias(alias **head, char *key, char *value)
     _head = *head;
     while (_head->next)
     {
-        if (customStrcmp(_head->key, key) == 0)
+        if (customStringCompares(_head->key, key) == 0)
         {
             customFree(_head->value);
             _head->value = customStrdup(value);
-            freealias(node);
+            freeAlias(node);
             return (0);
         }
         _head = _head->next;
@@ -86,8 +86,8 @@ int print_alias(alias *head, char *key)
         customStrcpy(msg, "not found ");
         smn = customMalloc(customStrlen("alias: ") + customStrlen(key) + 4);
         customStrcpy(smn, "alias: "), customStrcat(smn, key);
-        customPrintError(smn, NULL, msg);
-        customFree(msg), customFree(smn);
+        printErrorMessage(smn, NULL, msg);
+        Free(msg), customFree(smn);
         return (-1);
     }
 
@@ -111,8 +111,8 @@ int print_alias(alias *head, char *key)
     customStrcpy(msg, "not found ");
     smn = customMalloc(customStrlen("alias: ") + customStrlen(key) + 4);
     customStrcpy(smn, "alias: "), customStrcat(smn, key);
-    customPrintError(smn, NULL, msg);
-    customFree(msg), customFree(smn);
+    printErrorMessage(smn, NULL, msg);
+    Free(msg), Free(smn);
     return (-1);
 }
 
@@ -126,7 +126,7 @@ int print_alias(alias *head, char *key)
 
 int handle_alias(char **arg, alias **aliashead)
 {
-    int argc = customArglen(arg);
+    int argc = arrayLength(arg);
     int i = 0;
     char **tmp = NULL;
 
@@ -141,12 +141,12 @@ int handle_alias(char **arg, alias **aliashead)
         i += 1;
         while (arg[i])
         {
-            customParseArgs(arg[i], "=", &tmp, 0);
-            if (customArglen(tmp) > 1)
-                add_alias(aliashead, tmp[0], tmp[1]);
+            parseArguments(arg[i], "=", &tmp, 0);
+            if (arrayLength(tmp) > 1)
+                addAlias(aliashead, tmp[0], tmp[1]);
             else
-                print_alias(*aliashead, tmp[0]);
-            customFree_pp(tmp);
+                printAlias(*aliashead, tmp[0]);
+            freePointerArray(tmp);
             i++;
         }
     }
