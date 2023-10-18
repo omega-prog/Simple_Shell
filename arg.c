@@ -38,11 +38,11 @@ void tokenize_and_parse(char *input, const char *delimiter,
 	(*parsed_args)[arg_index] = NULL;
 	trimmed_arg = tokenized;
 
-	if ((tokenized[0] == '"' && tokenized[_strlen(tokenized) - 1] == '"') ||
-		(tokenized[0] == '\'' && tokenized[_strlen(tokenized) - 1] == '\''))
+	if ((tokenized[0] == '"' && tokenized[getStringLength(tokenized) - 1] == '"') ||
+		(tokenized[0] == '\'' && tokenized[getStringLength(tokenized) - 1] == '\''))
 	{
 		trimmed_arg = _strdup(tokenized + 1);
-		trimmed_arg[_strlen(trimmed_arg) - 1] = '\0';
+		trimmed_arg[getStringLength(trimmed_arg) - 1] = '\0';
 	}
 
 	trim_spaces(&((*parsed_args)[arg_index]), trimmed_arg);
