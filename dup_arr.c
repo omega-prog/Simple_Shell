@@ -6,13 +6,13 @@
  */
 char **duplicate_string_array(char **src)
 {
-	char **new_array = _malloc(sizeof(char *)
+	char **new_array = allocate_memory(sizeof(char *)
 		* (get_string_array_length(src) + 2));
 	char **new_array_ptr = new_array;
 
 	while (*src)
 	{
-	*new_array_ptr = _strdup(*src);
+	*new_array_ptr = duplicateString(*src);
 	new_array_ptr++;
 	src++;
 	}
