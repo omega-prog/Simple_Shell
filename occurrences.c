@@ -1,38 +1,59 @@
 #include "shell.h"
 
 /**
- * replace_and_count_occurrences - find and replace part of a string
- * and count occurrences
- * @str: string to be parsed and modified
- * @to_replace: substring to find and replace
- * @replace_with: substring to replace with
+ * find_tok_occ - find no. of occurences of token
+ * @str: string to be searched
+ * @tof: string to find
  *
- * Return: number of times the substring occurs (including replacements)
+ * Return: number of times delimiter occur
  */
-int replace_and_count_occurrences(char **str, char *to_replace,
-		char *replace_with)
+
+int find_no_occurences(char *str, char *tof)
 {
-	char *tokenized = NULL, *tmp, *new = _malloc(1);
-	int replacements = 0, occurrences = 0, newlen = 0;
+	char *tokenized = NULL, *new = NULL;
+	int i = 0;
 
-	tokenized = _strtok(*str, to_replace, 1);
-	*new = '\0';
-
+	if (_strlen(tof) > _strlen(str))
+		return (0);
+	new = _strdup(str);
+	tokenized = _strtok(new, tof, 1);
 	while (tokenized != NULL)
 	{
-	newlen = _strlen(new) + _strlen(tokenized) + _strlen(replace_with);
-	tmp = _realloc(new, newlen + 2);
-	new = tmp;
-	_strcat(new, tokenized);
+		i++;
+		tokenized = _strtok(NULL, tof, 1);
+	}
+	free(new);
+	if (_strcmps(str + _strlen(str) - _strlen(tof), tof) == 1)
+		i++;
+	return (i - 1);
+}
+/**
+ * find_n_rep - find and replace part of string
+ * @str: string to be parsed
+ * @torep: string to be replaced
+ * @repwith: sting to replace
+ *
+ * Return: 0 on sucess and -1 on faliure
+ */
 
-	if (replacements < occurrences)
-	_strcat(new, replace_with);
+int find_rep(char **str, char *torep, char *repwith)
+{
+	char *tokenized = NULL, *tmp, *new = _malloc(1);
+	int rep = 0, tor = find_tok_occ(*str, torep), newlen = 0;
 
-	replacements++;
-	occurrences++;
-		tokenized = _strtok(NULL, to_replace, 1);
+	tokenized = _strtok(*str, torep, 1);
+	*new = '\0';
+	while (tokenized != NULL)
+	{
+		newlen = _strlen(new) + _strlen(tokenized) + _strlen(repwith);
+		tmp = _realloc(new, newlen +  2);
+		new = tmp;
+		_strcat(new, tokenized);
+		if (rep < tor)
+			_strcat(new, repwith);
+		rep++, tokenized = _strtok(NULL, torep, 1);
 	}
 	free(*str);
 	*str = new;
-	return (occurrences - 1);
+	return (0);
 }
