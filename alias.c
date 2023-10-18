@@ -1,173 +1,175 @@
 #include "shell.h"
 
 /**
- * addNewAlias - add node to linked list
- * @head: pointer to the first node
- * @key: key to add in the node
+ * add_alias - add node to linked list
+ * @head: first node
+ * @key: key to add in node
  * @value: value to be added with the key
  *
  * Return: 0 on success, -1 on failure
  */
-int addNewAlias(alias **head, char *key, char *value)
+
+int add_alias(alias **head, char *key, char *value)
 {
-	alias *node, *_head;
+    alias *node, *_head;
 
-	if (!head)
-	return (-1);
+    if (!head)
+        return (-1);
 
-	node = allocate_memory(sizeof(alias));
-	node->key = duplicateString(key);
-	node->value = duplicateString(value);
-	node->next = NULL;
+    node = customMalloc(sizeof(alias));
+    node->key = customStrdup(key);
+    node->value = customStrdup(value);
+    node->next = NULL;
 
-	if (!*head)
-	{
-	*head = node;
-	return (0);
-	}
+    if (!*head)
+    {
+        *head = node;
+        return (0);
+    }
 
-	_head = *head;
-	while (_head->next)
-	{
-	if (!compareStrings(_head->key, key))
-	{
-	free(_head->value);
-	_head->value = duplicateString(value);
-	freealias(node);
-	return (0);
-	}
-	_head = _head->next;
-	}
-
-	_head->next = node;
-	return (0);
+    _head = *head;
+    while (_head->next)
+    {
+        if (customStrcmp(_head->key, key) == 0)
+        {
+            customFree(_head->value);
+            _head->value = customStrdup(value);
+            freealias(node);
+            return (0);
+        }
+        _head = _head->next;
+    }
+    _head->next = node;
+    return (0);
 }
 
 /**
- * printAllAliases - print contents of linked list
- * @head: pointer to the first node
+ * print_alias_list - print contents of linked list
+ * @head: first node
  * Return: 0 on success, -1 on failure
  */
 
-int printAllAliases(alias *head)
+int print_alias_list(alias *head)
 {
-	if (!head)
-	return (-1);
+    if (!head)
+        return (-1);
 
-	while (head)
-	{
-	writeToDescriptor(-1, NULL, 0);
-	writeToDescriptor(1, head->key, getStringLength(head->key));
-	writeToDescriptor(1, "='", 2);
-	writeToDescriptor(1, head->value, getStringLength(head->value));
-	writeToDescriptor(1, "'\n", 2);
-	writeToDescriptor(1, NULL, 0);
-	head = head->next;
-	}
-	return (0);
+    while (head)
+    {
+        customWrite(-1, NULL, 0);
+        customWrite(1, head->key, customStrlen(head->key));
+        customWrite(1, "='", 2);
+        customWrite(1, head->value, customStrlen(head->value));
+        customWrite(1, "'\n", 2);
+        customWrite(1, NULL, 0);
+
+        head = head->next;
+    }
+    return (0);
 }
+
 /**
- * printAliasByKey - print contents of a node whose key matches the given key
- * @head: pointer to the first node
- * @key: key of the node to be printed
+ * print_alias - print contents of a node whose key is key
+ * @head: first node
+ * @key: key of node to be printed
  *
  * Return: 0 on success, -1 on failure
  */
-int printAliasByKey(alias *head, char *key)
+int print_alias(alias *head, char *key)
 {
-	char *msg, *smn;
+    char *msg, *smn;
 
-	if (!head)
-	{
-	errno = -5;
-	msg = allocate_memory(getStringLength("not found ") + getStringLength(key) + 4);
-	copyString(msg, "not found ");
-	smn = allocate_memory(getStringLength("alias: ") + getStringLength(key) + 4);
-	copyString(smn, "alias: ");
-	concatenateStrings(smn, key);
-	custom_print_error(smn, NULL, msg);
-	free(msg);
-	free(smn);
-	return (-1);
-	}
+    if (!head)
+    {
+        errno = -5;
+        msg = customMalloc(customStrlen("not found ") + customStrlen(key) + 4);
+        customStrcpy(msg, "not found ");
+        smn = customMalloc(customStrlen("alias: ") + customStrlen(key) + 4);
+        customStrcpy(smn, "alias: "), customStrcat(smn, key);
+        customPrintError(smn, NULL, msg);
+        customFree(msg), customFree(smn);
+        return (-1);
+    }
 
-	while (head)
-	{
-	if (!compareStrings(head->value, key))
-	{
-	writeToDescriptor(-1, NULL, 0);
-	writeToDescriptor(1, head->key, getStringLength(head->key));
-	writeToDescriptor(1, "='", 2);
-	writeToDescriptor(1, head->value, getStringLength(head->value));
-	writeToDescriptor(1, "'\n", 2);
-	writeToDescriptor(1, NULL, 0);
-	return (0);
-	}
-	head = head->next;
-	}
+    while (head)
+    {
+        if (customStrcmp(head->key, key) == 0)
+        {
+            customWrite(-1, NULL, 0);
+            customWrite(1, head->key, customStrlen(head->key));
+            customWrite(1, "='", 2);
+            customWrite(1, head->value, customStrlen(head->value));
+            customWrite(1, "'\n", 2);
+            customWrite(1, NULL, 0);
+            return (0);
+        }
+        head = head->next;
+    }
 
-	errno = -3;
-	msg = allocate_memory(getStringLength("not found ") + getStringLength(key) + 4);
-	copyString(msg, "not found ");
-	smn = allocate_memory(getStringLength("alias: ") + getStringLength(key) + 4);
-	copyString(smn, "alias: ");
-	concatenateStrings(smn, key);
-	custom_print_error(smn, NULL, msg);
-	free(msg), free(smn);
-	return (-1);
+    errno = -3;
+    msg = customMalloc(customStrlen("not found ") + customStrlen(key) + 4);
+    customStrcpy(msg, "not found ");
+    smn = customMalloc(customStrlen("alias: ") + customStrlen(key) + 4);
+    customStrcpy(smn, "alias: "), customStrcat(smn, key);
+    customPrintError(smn, NULL, msg);
+    customFree(msg), customFree(smn);
+    return (-1);
 }
+
 /**
- * handleAliases - handle flags for aliases
+ * handle_alias - handle flags for aliases
  * @arg: arguments
- * @aliashead: pointer to the first node
+ * @aliashead: first node
  *
  * Return: 0 on success, -1 on failure
  */
 
-int handleAliases(char **arg, alias **aliashead)
+int handle_alias(char **arg, alias **aliashead)
 {
-	int argc = get_string_array_length(arg);
-	int i = 0;
-	char **tmp = NULL;
+    int argc = customArglen(arg);
+    int i = 0;
+    char **tmp = NULL;
 
-	if (argc == 0)
-	return (-1);
+    if (argc == 0)
+        return (-1);
 
-	if (argc == 1)
-	printAllAliases(*aliashead);
+    if (argc == 1)
+        print_alias_list(*aliashead);
 
-	if (argc > 1)
-	{
-	i += 1;
-	while (arg[i])
-	{
-	tokenize_and_parse(arg[i], "=", &tmp, 0);
-		if (get_string_array_length(tmp) > 1)
-		addNewAlias(aliashead, tmp[0], tmp[1]);
-		else
-		printAliasByKey(*aliashead, tmp[0]);
-		free_string_array(tmp), i++;
-	}
-	}
-	return (0);
+    if (argc > 1)
+    {
+        i += 1;
+        while (arg[i])
+        {
+            customParseArgs(arg[i], "=", &tmp, 0);
+            if (customArglen(tmp) > 1)
+                add_alias(aliashead, tmp[0], tmp[1]);
+            else
+                print_alias(*aliashead, tmp[0]);
+            customFree_pp(tmp);
+            i++;
+        }
+    }
+    return (0);
 }
+
 /**
  * freealias - free alias linked list
  * @head: first node
- * Return: 0 on sucess -1 on faliure
+ * Return: 0 on success, -1 on failure
  */
 
 int freealias(alias *head)
 {
-	alias *tmp;
+    alias *tmp;
 
-	while (head)
-	{
-		tmp = head->next;
-		free(head->key);
-		free(head->value);
-		free(head);
-		head = tmp;
-	}
-	return (0);
+    while (head)
+    {
+        tmp = head->next;
+        customFree(head->key);
+        customFree(head->value);
+        customFree(head);
+        head = tmp;
+    }
+    return (0);
 }
