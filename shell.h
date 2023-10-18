@@ -13,6 +13,38 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#define BUFFER_t 1024
+
+/**
+ * struct cmdnode - a node for one command in a command list
+ * @cmd: command string
+ * @op: operation between current command and next command
+ * @estat: exit status (shows if the command has been excuted or not)
+ * @next: a pointer to the next operand
+ */
+
+typedef struct cmdnode
+{
+	char *cmd;
+	char *op;
+	int estat;
+	struct cmdnode *next;
+} cmdnode;
+
+/**
+ * struct alias - a node for one alias
+ * @key: the alais
+ * @value: value of the alias
+ * @next: a pointer to the next alias
+ */
+
+typedef struct alias
+{
+	char *key;
+	char *value;
+	struct alias *next;
+} alias;
+
 
 int convertStringToInt(const char *str);
 int customGetline(char **lnptr, size_t *size, int fd);
@@ -54,3 +86,5 @@ int calculate_exponent(unsigned int base, int exponent);
 int execute_shell_script(char *script_path);
 int replace_and_count_occurrences(char **str, char *to_replace, char *replace_with);
 int *handle_builtin_commands(char **cmd, alias **aliases);
+
+extern char **environ;
