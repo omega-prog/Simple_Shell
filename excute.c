@@ -1,3 +1,4 @@
+#include "shell.h"
 /**
  * execute_shell_script - execute a shell script from a file
  * @script_path: path to the shell script file

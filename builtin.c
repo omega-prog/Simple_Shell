@@ -1,3 +1,4 @@
+#include "shell.h"
 /**
  * handle_builtin_commands - Handle built-in commands
  * @cmd: Arguments for the command
