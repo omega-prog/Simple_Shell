@@ -1,24 +1,24 @@
 #include "shell.h"
 
 /**
- * concatenateStrings - concatenate two strings
- * @dest: destination string
+ * customStrcat - concatenate two strings
+ * @dest: string destination
  * @src: source string
  *
  * Return: concatenated string
  */
 
-char *concatenateStrings(char *dest, char *src)
+char *customStrcat(char *dest, char *src)
 {
-	char *p = dest;
+    char *p = dest;
 
-	while (*p)
-	p++;
+    while (*p)
+        p++;
 
-	while (*src)
-	*p++ = *src++;
+    while (*src)
+        *p++ = *src++;
 
-	*p = '\0';
+    *p = '\0';
 
-	return (dest);
+    return (dest);
 }
