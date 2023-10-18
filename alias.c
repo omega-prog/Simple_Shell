@@ -29,7 +29,7 @@ int addNewAlias(alias **head, char *key, char *value)
 	_head = *head;
 	while (_head->next)
 	{
-	if (!_strcmp(_head->key, key))
+	if (!compareStrings(_head->key, key))
 	{
 	free(_head->value);
 	_head->value = duplicateString(value);
@@ -93,7 +93,7 @@ int printAliasByKey(alias *head, char *key)
 
 	while (head)
 	{
-	if (!_strcmp(head->value, key))
+	if (!compareStrings(head->value, key))
 	{
 	_write(-1, NULL, 0);
 	_write(1, head->key, _strlen(head->key));
