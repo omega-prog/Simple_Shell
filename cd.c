@@ -36,7 +36,7 @@ int change_current_directory(char *path)
 
 	custom_getenv("OLDPWD", currentdir, 1);
 	cdir = getcwd(buf, size);
-	custom_setenv("PWD", cdir, 1);
+	custom_getenv("PWD", cdir, 1);
 	free(buf), free(cdir);
 	return (exitstat);
 }
