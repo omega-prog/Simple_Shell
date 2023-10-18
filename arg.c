@@ -32,7 +32,7 @@ void tokenize_and_parse(char *input, const char *delimiter,
 		temp_args[i] = duplicateString((*parsed_args)[i]);
 		i++;
 	}
-	free_pp(*parsed_args);
+	free_string_array(*parsed_args);
 	*parsed_args = temp_args;
 	}
 	(*parsed_args)[arg_index] = NULL;
