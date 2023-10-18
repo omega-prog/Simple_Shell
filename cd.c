@@ -24,7 +24,7 @@ int change_current_directory(char *path)
 	if (status < 0)
 	{
 	errno = -3;
-	msg = allocate_memory(_strlen("No such file or directory ") + getStringLength(path) + 4);
+	msg = allocate_memory(getStringLength("No such file or directory ") + getStringLength(path) + 4);
 	copyString(msg, "No such file or directory ");
 	smn = allocate_memory(getStringLength("cd: ") + getStringLength(path) + 4);
 	copyString(smn, "cd: ");
