@@ -10,7 +10,7 @@
  */
 int *handle_builtin_commands(char **cmd, alias **aliases)
 {
-	int *ret = _malloc(2 * sizeof(int));
+	int *ret = allocate_memory(2 * sizeof(int));
 
 	ret[0] = 1;
 	ret[1] = 266;
