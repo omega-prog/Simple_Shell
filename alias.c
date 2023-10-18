@@ -80,9 +80,9 @@ int printAliasByKey(alias *head, char *key)
 	if (!head)
 	{
 	errno = -5;
-	msg = _malloc(getStringLength("not found ") + getStringLength(key) + 4);
+	msg = allocate_memory(getStringLength("not found ") + getStringLength(key) + 4);
 	_strcpy(msg, "not found ");
-	smn = _malloc(getStringLength("alias: ") + getStringLength(key) + 4);
+	smn = allocate_memory(getStringLength("alias: ") + getStringLength(key) + 4);
 	_strcpy(smn, "alias: ");
 	_strcat(smn, key);
 	print_error(smn, NULL, msg);
@@ -107,9 +107,9 @@ int printAliasByKey(alias *head, char *key)
 	}
 
 	errno = -3;
-	msg = _malloc(getStringLength("not found ") + getStringLength(key) + 4);
+	msg = allocate_memory(getStringLength("not found ") + getStringLength(key) + 4);
 	_strcpy(msg, "not found ");
-	smn = _malloc(getStringLength("alias: ") + getStringLength(key) + 4);
+	smn = allocate_memory(getStringLength("alias: ") + getStringLength(key) + 4);
 	_strcpy(smn, "alias: ");
 	_strcat(smn, key);
 	print_error(smn, NULL, msg);
