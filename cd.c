@@ -8,33 +8,35 @@
 int change_current_directory(char *path)
 {
 	int status, exitstat = 0;
-	char *currentdir = _getenv("PWD"), *buf = NULL, *cdir, *msg;
+	char *currentdir = custom_getenv("PWD"), *buf = NULL, *cdir, *msg;
 	char *smn;
 	size_t size = 0;
 
-	if (!path || !_strcmp(path, "~"))
-	status = chdir(_getenv("HOME"));
-	else if (!_strcmp(path, "-"))
-	status = chdir(_getenv("OLDPWD"));
+	if (!path || !compareStrings(path, "~"))
+	status = change_current_directory(custom_getenv
+	("HOME"));
+	else if (!compareStrings(path, "-"))
+	status = change_current_directory(custom_getenv
+	("OLDPWD"));
 	else
-	status = chdir(path);
+	status = change_current_directory(path);
 
 	if (status < 0)
 	{
 	errno = -3;
-	msg = _malloc(_strlen("No such file or directory ") + _strlen(path) + 4);
-	_strcpy(msg, "No such file or directory ");
-	smn = _malloc(_strlen("cd: ") + _strlen(path) + 4);
-	_strcpy(smn, "cd: ");
-	_strcat(smn, path);
-	print_error(smn, NULL, msg);
+	msg = allocate_memory(_strlen("No such file or directory ") + getStringLength(path) + 4);
+	copyString(msg, "No such file or directory ");
+	smn = allocate_memory(getStringLength("cd: ") + getStringLength(path) + 4);
+	copyString(smn, "cd: ");
+	concatenateStrings(smn, path);
+	custom_print_error(smn, NULL, msg);
 	free(msg), free(smn);
 	exitstat = 1;
 	}
 
-	_setenv("OLDPWD", currentdir, 1);
+	custom_setenv("OLDPWD", currentdir, 1);
 	cdir = getcwd(buf, size);
-	_setenv("PWD", cdir, 1);
+	custom_setenv("PWD", cdir, 1);
 	free(buf), free(cdir);
 	return (exitstat);
 }
