@@ -16,8 +16,8 @@ int addNewAlias(alias **head, char *key, char *value)
 	return (-1);
 
 	node = allocate_memory(sizeof(alias));
-	node->key = _strdup(key);
-	node->value = _strdup(value);
+	node->key = duplicateString(key);
+	node->value = duplicateString(value);
 	node->next = NULL;
 
 	if (!*head)
@@ -32,7 +32,7 @@ int addNewAlias(alias **head, char *key, char *value)
 	if (!_strcmp(_head->key, key))
 	{
 	free(_head->value);
-	_head->value = _strdup(value);
+	_head->value = duplicateString(value);
 	freealias(node);
 	return (0);
 	}
