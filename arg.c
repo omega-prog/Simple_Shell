@@ -16,7 +16,7 @@ void tokenize_and_parse(char *input, const char *delimiter,
 	int arg_index = 0, i;
 
 	*parsed_args = NULL;
-	tokenized = _strtok(input, delimiter, mode);
+	tokenized = tokenizeString(input, delimiter, mode);
 
 	while (tokenized != NULL)
 	{
@@ -49,7 +49,7 @@ void tokenize_and_parse(char *input, const char *delimiter,
 	(*parsed_args)[arg_index + 1] = NULL;
 	if (trimmed_arg != tokenized)
 		free(trimmed_arg);
-	tokenized = _strtok(NULL, delimiter, mode);
+	tokenized = tokenizeString(NULL, delimiter, mode);
 	arg_index++;
 	}
 }
