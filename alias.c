@@ -84,7 +84,7 @@ int printAliasByKey(alias *head, char *key)
 	copyString(msg, "not found ");
 	smn = allocate_memory(getStringLength("alias: ") + getStringLength(key) + 4);
 	copyString(smn, "alias: ");
-	_strcat(smn, key);
+	concatenateStrings(smn, key);
 	custom_print_error(smn, NULL, msg);
 	free(msg);
 	free(smn);
@@ -111,7 +111,7 @@ int printAliasByKey(alias *head, char *key)
 	copyString(msg, "not found ");
 	smn = allocate_memory(getStringLength("alias: ") + getStringLength(key) + 4);
 	copyString(smn, "alias: ");
-	_strcat(smn, key);
+	concatenateStrings(smn, key);
 	custom_print_error(smn, NULL, msg);
 	free(msg), free(smn);
 	return (-1);
