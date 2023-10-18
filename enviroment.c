@@ -1,5 +1,5 @@
 #include "shell.h"
-#define l(x) _strlen((x))
+#define l(x) custom_strlen((x))
 #define cch const char
 
 /**
@@ -9,32 +9,32 @@
  */
 int custom_putenv(char *es)
 {
-	char **custom_environ = environ, **new_custom_environ, **custom_environ_ptr;
-	int len = 0;
+    char **custom_environ = environ, **new_custom_environ;
+    int len = 0;
 
-	while (*custom_environ)
-	len++, custom_environ++;
+    while (*custom_environ)
+        len++, custom_environ++;
 
-	new_custom_environ = allocate_memory
-	(sizeof(char *) * (len + 4));
-	custom_environ_ptr = new_custom_environ;
-	custom_environ = environ;
-	while (len)
-	{
-	*_new_custom_environ = allocate_memory
-	(sizeof(char) * getStringLength(*custom_environ) + 4);
-	copyString(*_new_custom_environ, *_custom_environ);
-	_new_custom_environ++, _custom_environ++, len--;
-	}
-	*_new_custom_environ = allocate_memory
-	(sizeof(char) * getStringLength(es) + 4);
-	copyString(*_new_custom_environ, es);
-	free(es);
-	_new_custom_environ++;
-	*_new_custom_environ = NULL;
-	free_string_array(environ);
-	environ = new_custom_environ;
-	return (0);
+    new_custom_environ = allocate_memory(sizeof(char *) * (len + 4));
+
+    char **_new_custom_environ = new_custom_environ;
+    char **_custom_environ = environ;
+
+    while (len)
+    {
+        *_new_custom_environ = allocate_memory(l(*_custom_environ) + 4);
+        copyString(*_new_custom_environ, *_custom_environ);
+        _new_custom_environ++, _custom_environ++, len--;
+    }
+
+    *_new_custom_environ = allocate_memory(l(es) + 4);
+    copyString(*_new_custom_environ, es);
+    free(es);
+    _new_custom_environ++;
+    *_new_custom_environ = NULL;
+    free_string_array(environ);
+    environ = new_custom_environ;
+    return (0);
 }
 
 /**
@@ -44,42 +44,43 @@ int custom_putenv(char *es)
  * @overwrite: overwrite status
  * Return: 0 on success and -1 on failure
  */
-int custom_setenv(cch *name, cch *value, __attribute__((unused))int overwrite)
+int custom_setenv(cch *name, cch *value, __attribute__((unused)) int overwrite)
 {
-	char *es, **ep, *var;
-	int i = 0;
+    char *es, **ep, *var;
+    int i = 0;
 
-	if (name == NULL || name[0] == '\0' || value == NULL)
-	return (-1);
+    if (name == NULL || name[0] == '\0' || value == NULL)
+        return (-1);
 
-	if (environ)
-	{
-	ep = duplicate_string_array(environ);
-	while (ep[i])
-	{
-		var = tokenizeString(ep[i], "=", 0);
-		if (!compareStrings(var, (char *)name))
-		{
-		free(environ[i]);
-		environ[i] = allocate_memory
-		(getStringLength(name) + getStringLength(value) + 4);
-		copyString(environ[i], (char *)name);
-		concatenateStrings(environ[i], "=");
-		concatenateStrings(environ[i], (char *)value);
-		free_string_array(ep);
-		return (0);
-		}
-		i++;
-	}
-	free_string_array(ep);
-	}
-	es = allocate_memory
-	(getStringLength(name) + getStringLength(value) + 2);
-	if (es == NULL)
-	return (-1);
-	copyString(es, (char *)name), concatenateStrings(es, "="), concatenateStrings(es, (char *)value);
-	return ((custom_putenv(es) != 0) ? -1 : 0);
-	free(es);
+    if (environ)
+    {
+        ep = duplicate_string_array(environ);
+        while (ep[i])
+        {
+            var = tokenizeString(ep[i], "=", 0);
+            if (!compareStrings(var, (char *)name))
+            {
+                free(environ[i]);
+                environ[i] = allocate_memory(l(name) + l(value) + 4);
+                copyString(environ[i], (char *)name);
+                concatenateStrings(environ[i], "=");
+                concatenateStrings(environ[i], (char *)value);
+                free_string_array(ep);
+                return (0);
+            }
+            i++;
+        }
+        free_string_array(ep);
+    }
+
+    es = callocate_memory(l(name) + l(value) + 2);
+    if (es == NULL)
+        return (-1);
+    copyString(es, (char *)name);
+    concatenateStrings(es, "=");
+    concatenateStrings(es, (char *)value);
+    return ((putenv(es) != 0) ? -1 : 0);
+    free(es);
 }
 
 /**
@@ -89,27 +90,27 @@ int custom_setenv(cch *name, cch *value, __attribute__((unused))int overwrite)
  */
 int custom_unsetenv(const char *name)
 {
-	char **ep, **sp, *var, *value;
+    char **ep, **sp, *var, *value;
 
-	if (name == NULL || name[0] == '\0')
-	return (-1);
-	ep = duplicate(environ);
-	free_string_array(environ);
-	environ = allocate_memory
-	(sizeof(char *));
+    if (name == NULL || name[0] == '\0')
+        return (-1);
 
-	for (sp = ep; *sp != NULL;)
-	{
-	var = tokenizeString(*sp, "=", 0);
-	if (compareStrings(var, (char *)name))
-	{
-		value = tokenizeString(NULL, "=", 0);
-		custom_setenv(var, value, 1);
-	}
-		sp++;
-	}
-	free_string_array(ep);
-	return (0);
+    ep = duplicate_string_array(environ);
+    free_string_array(environ);
+    environ = allocate_memory(sizeof(char *));
+
+    for (sp = ep; *sp != NULL;)
+    {
+        var = tokenizeString(*sp, "=", 0);
+        if (compareStrings(var, (char *)name))
+        {
+            value = tokenizeString(NULL, "=", 0);
+            custom_setenv(var, value, 1);
+        }
+        sp++;
+    }
+    free_string_array(ep);
+    return (0);
 }
 
 /**
@@ -117,18 +118,20 @@ int custom_unsetenv(const char *name)
  */
 void custom_printenv(void)
 {
-	char **custom_env = environ;
+    char **custom_env = environ;
 
-	if (!custom_env)
-	return;
-	writeToDescriptor(-1, NULL, 0);
-	while (*custom_env)
-	{
-	write(1, *custom_env, getStringLength(*custom_env));
-	write(1, "\n", 1);
-	custom_env++;
-	}
-	write(1, NULL, 0);
+    if (!custom_env)
+        return;
+
+    writeToDescriptor(-1, NULL, 0);
+
+    while (*custom_env)
+    {
+        writeToDescriptor(1, *custom_env, l(*custom_env));
+        writeToDescriptor(1, "\n", 1);
+        custom_env++;
+    }
+    writeToDescriptor(1, NULL, 0);
 }
 
 /**
@@ -138,21 +141,24 @@ void custom_printenv(void)
  */
 char *custom_getenv(const char *name)
 {
-	int len, i;
-	const char *np;
-	char **p, *cp;
+    int len, i;
+    const char *np;
+    char **p, *cp;
 
-	if (name == NULL || environ == NULL)
-	return (NULL);
-	for (np = name; *np && *np != '='; ++np)
-	len = np - name;
-	for (p = environ; (cp = *p) != NULL; ++p)
-	{
-	for (np = name, i = len; i && *cp; i--)
-		if (*cp++ != *np++)
-		break;
-	if (i == 0 && *cp++ == '=')
-		return (cp);
-	}
-	return (NULL);
+    if (name == NULL || environ == NULL)
+        return (NULL);
+
+    for (np = name; *np && *np != '='; ++np)
+        len = np - name;
+
+    for (p = environ; (cp = *p) != NULL; ++p)
+    {
+        for (np = name, i = len; i && *cp; i--)
+            if (*cp++ != *np++)
+                break;
+
+        if (i == 0 && *cp++ == '=')
+            return (cp);
+    }
+    return (NULL);
 }
