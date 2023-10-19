@@ -9,17 +9,17 @@
  */
 int isCustomCommand(custom_info_t *info, char *file_path)
 {
-    struct stat st;
+	struct stat st;
 
-    (void)info;
-    if (!file_path || stat(file_path, &st))
-        return 0;
+	(void)info;
+	if (!file_path || stat(file_path, &st))
+		return (0);
 
-    if (st.st_mode & S_IFREG)
-    {
-        return 1;
-    }
-    return 0;
+	if (st.st_mode & S_IFREG)
+	{
+		return 1;
+	}
+	return (0);
 }
 
 /**
@@ -32,14 +32,14 @@ int isCustomCommand(custom_info_t *info, char *file_path)
  */
 char *duplicateChars(char *source, int start, int stop)
 {
-    static char buffer[1024];
-    int i = 0, k = 0;
+	static char buffer[1024];
+	int i = 0, k = 0;
 
-    for (k = 0, i = start; i < stop; i++)
-        if (source[i] != ':')
-            buffer[k++] = source[i];
-    buffer[k] = 0;
-    return buffer;
+	for (k = 0, i = start; i < stop; i++)
+		if (source[i] != ':')
+			buffer[k++] = source[i];
+	buffer[k] = 0;
+	return (buffer);
 }
 
 /**
@@ -52,35 +52,35 @@ char *duplicateChars(char *source, int start, int stop)
  */
 char *findCustomPath(custom_info_t *info, char *pathstr, char *cmd)
 {
-    int i = 0, curr_pos = 0;
-    char *path;
+	int i = 0, curr_pos = 0;
+	char *path;
 
-    if (!pathstr)
-        return NULL;
-    if ((customStringLength(cmd) > 2) && customStartsWith(cmd, "./"))
-    {
-        if (isCustomCommand(info, cmd))
-            return cmd;
-    }
-    while (1)
-    {
-        if (!pathstr[i] || pathstr[i] == ':')
-        {
-            path = duplicateChars(pathstr, curr_pos, i);
-            if (!*path)
-                customStringConcatenate(path, cmd);
-            else
-            {
-                customStringConcatenate(path, "/");
-                customStringConcatenate(path, cmd);
-            }
-            if (isCustomCommand(info, path))
-                return path;
-            if (!pathstr[i])
-                break;
-            curr_pos = i;
-        }
-        i++;
-    }
-    return NULL;
+	if (!pathstr)
+		return (NULL);
+	if ((customStringLength(cmd) > 2) && customStartsWith(cmd, "./"))
+	{
+		if (isCustomCommand(info, cmd))
+			return (cmd);
+	}
+	while (1)
+	{
+		if (!pathstr[i] || pathstr[i] == ':')
+		{
+			path = duplicateChars(pathstr, curr_pos, i);
+			if (!*path)
+				customStringConcatenate(path, cmd);
+			else
+			{
+				customStringConcatenate(path, "/");
+				customStringConcatenate(path, cmd);
+			}
+			if (isCustomCommand(info, path))
+				return (path);
+			if (!pathstr[i])
+				break;
+			curr_pos = i;
+		}
+		i++;
+	}
+	return (NULL);
 }
