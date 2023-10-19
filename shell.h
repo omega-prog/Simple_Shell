@@ -178,9 +178,6 @@ int customHelp(custom_info_t *);
 /* custom_alias.c */
 int customHistory(custom_info_t *);
 int customAlias(custom_info_t *);
-int remove_alias(info_t *info, char *str);
-int create_alias(info_t *info, char *str);
-int type_alias(list_t *node);
 
 /* custom_getline.c */
 ssize_t getCustomInput(custom_info_t *);
