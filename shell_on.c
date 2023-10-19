@@ -8,7 +8,7 @@
  */
 int checkIfInteractive(custom_info_t *shellInfo)
 {
-    return (isatty(STDIN_FILENO) && shellInfo->readFileDescriptor <= 2);
+	return (isatty(STDIN_FILENO) && shellInfo->readFileDescriptor <= 2);
 }
 
 /**
@@ -19,10 +19,10 @@ int checkIfInteractive(custom_info_t *shellInfo)
  */
 int isDelimiterCharacter(char character, char *delimiterString)
 {
-    while (*delimiterString)
-        if (*delimiterString++ == character)
-            return (1);
-    return (0);
+	while (*delimiterString)
+	if (*delimiterString++ == character)
+		return (1);
+	return (0);
 }
 
 /**
@@ -32,10 +32,10 @@ int isDelimiterCharacter(char character, char *delimiterString)
  */
 int isAlphabeticalChar(int ch)
 {
-    if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
-        return (1);
-    else
-        return (0);
+	if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+		return (1);
+	else
+		return (0);
 }
 
 /**
@@ -45,28 +45,28 @@ int isAlphabeticalChar(int ch)
  */
 int convertStringToInteger(char *str)
 {
-    int index, sign = 1, flag = 0, result;
-    unsigned int output = 0;
+	int index, sign = 1, flag = 0, result;
+	unsigned int output = 0;
 
-    for (index = 0; str[index] != '\0' && flag != 2; index++)
-    {
-        if (str[index] == '-')
-            sign *= -1;
+	for (index = 0; str[index] != '\0' && flag != 2; index++)
+	{
+	if (str[index] == '-')
+		sign *= -1;
 
-        if (str[index] >= '0' && str[index] <= '9')
-        {
-            flag = 1;
-            output *= 10;
-            output += (str[index] - '0');
-        }
-        else if (flag == 1)
-            flag = 2;
-    }
+	if (str[index] >= '0' && str[index] <= '9')
+	{
+	flag = 1;
+	output *= 10;
+	output += (str[index] - '0');
+	}
+	else if (flag == 1)
+	flag = 2;
+	}
 
-    if (sign == -1)
-        result = -output;
-    else
-        result = output;
+	if (sign == -1)
+	result = -output;
+	else
+	result = output;
 
-    return (result);
+	return (result);
 }
