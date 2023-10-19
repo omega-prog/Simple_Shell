@@ -70,8 +70,8 @@ size_t printCustomList(const custom_list_t *list)
     while (list)
     {
         customPutsFd(convertInteger(list->number, 10, 0), 1);
-        customPutchar(":", 1);
-        customPutchar(" ", 1);
+        customPuts(":", 1);
+        customPuts(" ", 1);
         customPuts(list->string ? list->string : "(nil)", 1);
         customPuts("\n", 1);
         list = list->next;
