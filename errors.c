@@ -29,14 +29,14 @@ void customErrorPuts(char *inputString)
 int customErrorPutchar(char character)
 {
     static int i;
-    static char buffer[WRITE_BUF_SIZE];
+    static char buffer[WRITE_BUFFER_SIZE];
 
-    if (character == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+    if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
     {
         write(STDERR_FILENO, buffer, i);
         i = 0;
     }
-    if (character != BUF_FLUSH)
+    if (character != BUFFER_FLUSH)
         buffer[i++] = character;
     return 1;
 }
@@ -52,14 +52,14 @@ int customErrorPutchar(char character)
 int customPutFd(char character, int fd)
 {
     static int i;
-    static char buffer[WRITE_BUF_SIZE];
+    static char buffer[WRITE_BUFFER_SIZE];
 
-    if (character == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+    if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
     {
         write(fd, buffer, i);
         i = 0;
     }
-    if (character != BUF_FLUSH)
+    if (character != BUFFER_FLUSH)
         buffer[i++] = character;
     return 1;
 }
