@@ -166,5 +166,5 @@ void customSignalIntHandler(__attribute__((unused))int sig_num)
 {
     customPuts("\n");
     customPuts("$ ");
-    customPutChar(BUFFER_FLUSH);
+    customPutchar(BUFFER_FLUSH);
 }
