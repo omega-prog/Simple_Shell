@@ -57,12 +57,9 @@ int customChangeDirectory(custom_info_t *info)
 	{
 		if (!customGetEnv(info, "OLDPWD="))
 		{
-			customPuts(currentDirectory);
-			customPutchar('\n');
-			return (1);
+			customPuts(currentDirectory), customPutchar('\n'), return (1);
 		}
-		customPuts(customGetEnv(info, "OLDPWD="));
-		customPutchar('\n');
+		customPuts(customGetEnv(info, "OLDPWD=")), customPutchar('\n');
 		chdirResult = /* TODO: what should this be? */
 			chdir((targetDirectory = customGetEnv(info,
 							"OLDPWD=")) ? targetDirectory : "/");
@@ -72,8 +69,7 @@ int customChangeDirectory(custom_info_t *info)
 	if (chdirResult == -1)
 	{
 		printCustomError(info, "can't cd to ");
-		customErrorPuts(info->argumentVector[1]);
-		customErrorPutchar('\n');
+		customErrorPuts(info->argumentVector[1]), customErrorPutchar('\n');
 	}
 	else
 	{
