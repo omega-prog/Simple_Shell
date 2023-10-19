@@ -9,25 +9,25 @@
  */
 char *customStringCopyN(char *destination, char *source, int length)
 {
-    int i, j;
-    char *s = destination;
+	int i, j;
+	char *s = destination;
 
-    i = 0;
-    while (source[i] != '\0' && i < length - 1)
-    {
-        destination[i] = source[i];
-        i++;
-    }
-    if (i < length)
-    {
-        j = i;
-        while (j < length)
-        {
-            destination[j] = '\0';
-            j++;
-        }
-    }
-    return s;
+	i = 0;
+	while (source[i] != '\0' && i < length - 1)
+	{
+	destination[i] = source[i];
+	i++;
+	}
+	if (i < length)
+	{
+	j = i;
+	while (j < length)
+	{
+		destination[j] = '\0';
+		j++;
+	}
+	}
+	return (s);
 }
 
 /**
@@ -39,22 +39,22 @@ char *customStringCopyN(char *destination, char *source, int length)
  */
 char *customStringConcatenateN(char *destination, char *source, int maxLength)
 {
-    int i, j;
-    char *s = destination;
+	int i, j;
+	char *s = destination;
 
-    i = 0;
-    j = 0;
-    while (destination[i] != '\0')
-        i++;
-    while (source[j] != '\0' && j < maxLength)
-    {
-        destination[i] = source[j];
-        i++;
-        j++;
-    }
-    if (j < maxLength)
-        destination[i] = '\0';
-    return s;
+	i = 0;
+	j = 0;
+	while (destination[i] != '\0')
+	i++;
+	while (source[j] != '\0' && j < maxLength)
+	{
+	destination[i] = source[j];
+	i++;
+	j++;
+	}
+	if (j < maxLength)
+	destination[i] = '\0';
+	return (s);
 }
 
 /**
@@ -65,10 +65,10 @@ char *customStringConcatenateN(char *destination, char *source, int maxLength)
  */
 char *customStringCharacter(char *str, char character)
 {
-    do {
-        if (*str == character)
-            return str;
-    } while (*str++ != '\0');
+	do {
+	if (*str == character)
+	return (str);
+	} while (*str++ != '\0');
 
-    return NULL;
+	return (NULL);
 }
