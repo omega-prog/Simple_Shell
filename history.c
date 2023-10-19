@@ -13,7 +13,7 @@ char *getCustomHistoryFile(custom_info_t *info)
     dir = customGetEnv(info, "HOME=");
     if (!dir)
         return NULL;
-    buf = (char *)malloc(sizeof(char) * (customStringLength(dir) + customStringLength(HIST_FILE) + 2));
+    buf = (char *)malloc(sizeof(char) * (customStringLength(dir) + customStringLength(HISTORY_FILE) + 2));
     if (!buf)
         return NULL;
     buf[0] = 0;
@@ -33,7 +33,7 @@ int writeCustomHistory(custom_info_t *info)
 {
     ssize_t fd;
     char *filename = getCustomHistoryFile(info);
-    list_t *node = NULL;
+    custom_list_t *node = NULL;
 
     if (!filename)
         return -1;
