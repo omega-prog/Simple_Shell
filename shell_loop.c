@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * shellLoop - main shell loop
+ * customShellLoop - main shell loop
  * @info: the parameter & return info struct
  * @av: the argument vector from main()
  *
@@ -44,7 +44,7 @@ int customShellLoop(custom_info_t *info, char **av)
 }
 
 /**
- * findCustomBuiltin - finds a builtin command
+ * findCustomBuiltIn - finds a builtin command
  * @info: the parameter & return info struct
  *
  * Return: -1 if builtin not found,
@@ -69,7 +69,8 @@ int findCustomBuiltIn(custom_info_t *info)
 
 	for (i = 0; customBuiltinTable[i].commandType; i++)
 	{
-		if (customStringCompare(info->argumentVector[0], customBuiltinTable[i].commandType) == 0)
+		if (customStringCompare(info->argumentVector[0],
+					customBuiltinTable[i].commandType) == 0)
 		{
 			info->lineCount++;
 			builtinRet = customBuiltinTable[i].function(info);
@@ -80,7 +81,7 @@ int findCustomBuiltIn(custom_info_t *info)
 }
 
 /**
- * findCustomCommand - finds a command in PATH
+ * findCommand - finds a command in PATH
  * @info: the parameter & return info struct
  *
  * Return: void
@@ -105,8 +106,8 @@ void findCommand(custom_info_t *info)
 	{
 		return;
 	}
-
-	path = findCustomPath(info, customGetEnv(info, "PATH="), info->argumentVector[0]);
+	path = findCustomPath(info, customGetEnv(info,
+				"PATH="), info->argumentVector[0]);
 	if (path)
 	{
 		info->commandPath = path;
@@ -115,7 +116,8 @@ void findCommand(custom_info_t *info)
 	else
 	{
 		if ((checkIfInteractive(info) || customGetEnv(info, "PATH=")
-			|| info->argumentVector[0][0] == '/') && isCustomCommand(info, info->argumentVector[0]))
+			|| info->argumentVector[0][0] == '/')
+				&& isCustomCommand(info, info->argumentVector[0]))
 			forkCommand(info);
 		else if (*(info->arguments) != '\n')
 		{
@@ -126,7 +128,7 @@ void findCommand(custom_info_t *info)
 }
 
 /**
- * forkCustomCommand - forks an exec thread to run a command
+ * forkCommand - forks an exec thread to run a command
  * @info: the parameter & return info struct
  *
  * Return: void
@@ -143,7 +145,8 @@ void forkCommand(custom_info_t *info)
 	}
 	if (childPid == 0)
 	{
-		if (execve(info->commandPath, info->argumentVector, getCustomEnvironment(info)) == -1)
+		if (execve(info->commandPath, info->argumentVector,
+					getCustomEnvironment(info)) == -1)
 		{
 			freeCustomInfo(info, 1);
 			if (errno == EACCES)
