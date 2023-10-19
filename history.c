@@ -96,7 +96,7 @@ int readCustomHistory(custom_info_t *info)
 	free(buf);
 	info->historyCount = linecount;
 	while (info->historyCount-- >= HISTORY_MAX)
-	    deleteCustomNodeAtIndex(&(info->history), 0);
+	deleteCustomNodeAtIndex(&(info->history), 0);
 	renumberCustomHistory(info);
 	return (info->historyCount);
 }
@@ -105,7 +105,7 @@ int readCustomHistory(custom_info_t *info)
  * buildCustomHistoryList - adds an entry to a history linked list
  * @info: custom_info_t struct
  * @buffer: buffer
- * @linecount: the history linecount, histcount
+ * @lineCount: the history linecount, histcount
  *
  * Return: Always 0
  */
