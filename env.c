@@ -86,7 +86,7 @@ int populateEnvironmentList(custom_info_t *info)
 	custom_list_t *node = NULL;
 	size_t i;
 
-	for (i = 0; custom_environment[i]; i++)
+	for (i = 0; customEnvironment[i]; i++)
 		addCustomNodeEnd(&node, custom_environment[i], 0);
 	info->environment = node;
 	return (0);
