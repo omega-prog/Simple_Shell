@@ -6,7 +6,7 @@
  *
  * Return: 1 if in interactive mode, 0 otherwise
  */
-int checkIfInteractive(shell_info_t *shellInfo)
+int checkIfInteractive(custom_info_t *shellInfo)
 {
     return (isatty(STDIN_FILENO) && shellInfo->readFd <= 2);
 }
