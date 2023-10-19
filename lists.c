@@ -10,19 +10,19 @@
  */
 custom_list_t *addCustomNode(custom_list_t **head_ptr, const char *str, int num)
 {
-    list_t *new_head;
+    custom_list_t *new_head;
 
     if (!head_ptr)
         return NULL;
-    new_head = (list_t *)malloc(sizeof(list_t));
+    new_head = (custom_list_t *)malloc(sizeof(list_t));
     if (!new_head)
         return NULL;
     customMemorySet((void *)new_head, 0, sizeof(list_t));
-    new_head->num = num;
+    new_head->number = num;
     if (str)
     {
-        new_head->str = customStringDuplicate(str);
-        if (!new_head->str)
+        new_head->string = customStringDuplicate(str);
+        if (!new_head->string)
         {
             free(new_head);
             return NULL;
