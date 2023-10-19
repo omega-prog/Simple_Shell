@@ -49,10 +49,10 @@ custom_list_t *addCustomNodeEnd(custom_list_t **head_ptr, const char *str, int n
         return NULL;
 
     node = *head_ptr;
-    new_node = (custom_list_t *)malloc(sizeof(list_t));
+    new_node = (custom_list_t *)malloc(sizeof(custom_list_t));
     if (!new_node)
         return NULL;
-    customMemorySet((void *)new_node, 0, sizeof(list_t));
+    customMemorySet((void *)new_node, 0, sizeof(custom_list_t));
     new_node->number = num;
     if (str)
     {
