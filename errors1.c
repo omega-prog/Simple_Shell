@@ -47,7 +47,7 @@ void printCustomError(custom_info_t *info, char *errorString)
 }
 
 /**
- * printCustomDecimal - function prints a decimal (integer) number (base 10)
+ * printDecimal - function prints a decimal (integer) number (base 10)
  * @input: the input
  * @fileDescriptor: the file descriptor to write to
  *

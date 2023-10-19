@@ -57,12 +57,12 @@ int customChangeDirectory(custom_info_t *info)
 	{
 		if (!customGetEnv(info, "OLDPWD="))
 		{
-			customPuts(currentDirectory), customPutchar('\n'), return (1);
+			customPuts(currentDirectory), customPutchar('\n');
+			return (1);
 		}
 		customPuts(customGetEnv(info, "OLDPWD=")), customPutchar('\n');
-		chdirResult = /* TODO: what should this be? */
-			chdir((targetDirectory = customGetEnv(info,
-							"OLDPWD=")) ? targetDirectory : "/");
+		chdirResult = chdir((targetDirectory = customGetEnv(info,
+					"OLDPWD=")) ? targetDirectory : "/");
 	}
 	else
 		chdirResult = chdir(info->argumentVector[1]);
