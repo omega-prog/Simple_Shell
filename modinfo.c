@@ -6,10 +6,10 @@
  */
 void clearCustomInfo(custom_info_t *info)
 {
-    info->arg = NULL;
-    info->argv = NULL;
-    info->path = NULL;
-    info->argc = 0;
+    info->arguments = NULL;
+    info->argumentVector = NULL;
+    info->commandPath = NULL;
+    info->argumentCount = 0;
 }
 
 /**
@@ -21,25 +21,25 @@ void setCustomInfo(custom_info_t *info, char **av)
 {
     int i = 0;
 
-    info->fname = av[0];
-    if (info->arg)
+    info->filename = av[0];
+    if (info->arguments)
     {
-        info->argv = strtow(info->arg, " \t");
-        if (!info->argv)
+        info->argumentVector = customStringToWords(info->arguments, " \t");
+        if (!info->argumentVector)
         {
-            info->argv = malloc(sizeof(char *) * 2);
-            if (info->argv)
+            info->argumentVector = malloc(sizeof(char *) * 2);
+            if (info->argumentVector)
             {
-                info->argv[0] = customStringDuplicate(info->arg);
-                info->argv[1] = NULL;
+                info->argumentVector[0] = customStringDuplicate(info->arg);
+                info->argumentVector[1] = NULL;
             }
         }
-        for (i = 0; info->argv && info->argv[i]; i++)
+        for (i = 0; info->argumentVector && info->argumentVector[i]; i++)
             ;
-        info->argc = i;
+        info->argumentCount = i;
 
-        replace_alias(info);
-        replace_vars(info);
+        replaceCustomAlias(info);
+        replaceCustomVariables(info);
     }
 }
 
@@ -50,24 +50,24 @@ void setCustomInfo(custom_info_t *info, char **av)
  */
 void freeCustomInfo(custom_info_t *info, int all)
 {
-    ffree(info->argv);
-    info->argv = NULL;
-    info->path = NULL;
+    customFree(info->argumentVector);
+    info->argumentVector = NULL;
+    info->commandPath = NULL;
     if (all)
     {
-        if (!info->cmd_buf)
-            free(info->arg);
-        if (info->env)
-            free_list(&(info->env));
+        if (!info->commandBuffer)
+            customFree(info->arguments);
+        if (info->environment)
+            freeCustomList(&(info->environment));
         if (info->history)
-            free_list(&(info->history));
+            freeCustomList(&(info->history));
         if (info->alias)
-            free_list(&(info->alias));
-        ffree(info->environ);
-        info->environ = NULL;
-        bfree((void **)info->cmd_buf);
-        if (info->readfd > 2)
-            close(info->readfd);
-        customPutChar(BUF_FLUSH);
+            freeCustomList(&(info->alias));
+        customFree(info->custom_environment);
+        info->custom_environment = NULL;
+        customFreeMemory((void **)info->commandBuffer);
+        if (info->readFileDescriptor > 2)
+            close(info->readFileDescriptor);
+        customPutchar(BUF_FLUSH);
     }
 }
