@@ -43,21 +43,21 @@ custom_list_t *addCustomNode(custom_list_t **head_ptr, const char *str, int num)
  */
 custom_list_t *addCustomNodeEnd(custom_list_t **head_ptr, const char *str, int num)
 {
-    list_t *new_node, *node;
+    custom_list_t *new_node, *node;
 
     if (!head_ptr)
         return NULL;
 
     node = *head_ptr;
-    new_node = (list_t *)malloc(sizeof(list_t));
+    new_node = (custom_list_t *)malloc(sizeof(list_t));
     if (!new_node)
         return NULL;
     customMemorySet((void *)new_node, 0, sizeof(list_t));
-    new_node->num = num;
+    new_node->number = num;
     if (str)
     {
-        new_node->str = customStringDuplicate(str);
-        if (!new_node->str)
+        new_node->string = customStringDuplicate(str);
+        if (!new_node->string)
         {
             free(new_node);
             return NULL;
@@ -86,7 +86,7 @@ size_t printCustomListString(const custom_list_t *head)
 
     while (head)
     {
-        customPuts(head->str ? head->str : "(nil)");
+        customPuts(head->string ? head->string : "(nil)");
         customPuts("\n");
         head = head->next;
         i++;
@@ -103,7 +103,7 @@ size_t printCustomListString(const custom_list_t *head)
  */
 int deleteCustomNodeAtIndex(custom_list_t **head_ptr, unsigned int index)
 {
-    list_t *node, *prev_node;
+    custom_list_t *node, *prev_node;
     unsigned int i = 0;
 
     if (!head_ptr || !*head_ptr)
@@ -113,7 +113,7 @@ int deleteCustomNodeAtIndex(custom_list_t **head_ptr, unsigned int index)
     {
         node = *head_ptr;
         *head_ptr = (*head_ptr)->next;
-        free(node->str);
+        free(node->string);
         free(node);
         return 1;
     }
@@ -123,7 +123,7 @@ int deleteCustomNodeAtIndex(custom_list_t **head_ptr, unsigned int index)
         if (i == index)
         {
             prev_node->next = node->next;
-            free(node->str);
+            free(node->string);
             free(node);
             return 1;
         }
@@ -142,7 +142,7 @@ int deleteCustomNodeAtIndex(custom_list_t **head_ptr, unsigned int index)
  */
 void freeCustomList(custom_list_t **head_ptr)
 {
-    list_t *node, *next_node, *head;
+    custom_list_t *node, *next_node, *head;
 
     if (!head_ptr || !*head_ptr)
         return;
@@ -151,7 +151,7 @@ void freeCustomList(custom_list_t **head_ptr)
     while (node)
     {
         next_node = node->next;
-        free(node->str);
+        free(node->string);
         free(node);
         node = next_node;
     }
