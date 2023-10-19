@@ -8,15 +8,15 @@
  */
 void customErrorPuts(char *inputString)
 {
-    int i = 0;
+	int i = 0;
 
-    if (!inputString)
-        return;
-    while (inputString[i] != '\0')
-    {
-        customErrorPutchar(inputString[i]);
-        i++;
-    }
+	if (!inputString)
+	return;
+	while (inputString[i] != '\0')
+	{
+	customErrorPutchar(inputString[i]);
+	i++;
+	}
 }
 
 /**
@@ -28,17 +28,17 @@ void customErrorPuts(char *inputString)
  */
 int customErrorPutchar(char character)
 {
-    static int i;
-    static char buffer[WRITE_BUFFER_SIZE];
+	static int i;
+	static char buffer[WRITE_BUFFER_SIZE];
 
-    if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
-    {
-        write(STDERR_FILENO, buffer, i);
-        i = 0;
-    }
-    if (character != BUFFER_FLUSH)
-        buffer[i++] = character;
-    return 1;
+	if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
+	{
+	write(STDERR_FILENO, buffer, i);
+	i = 0;
+	}
+	if (character != BUFFER_FLUSH)
+	buffer[i++] = character;
+	return (1);
 }
 
 /**
@@ -51,17 +51,17 @@ int customErrorPutchar(char character)
  */
 int customPutFd(char character, int fd)
 {
-    static int i;
-    static char buffer[WRITE_BUFFER_SIZE];
+	static int i;
+	static char buffer[WRITE_BUFFER_SIZE];
 
-    if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
-    {
-        write(fd, buffer, i);
-        i = 0;
-    }
-    if (character != BUFFER_FLUSH)
-        buffer[i++] = character;
-    return 1;
+	if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
+	{
+	write(fd, buffer, i);
+	i = 0;
+	}
+	if (character != BUFFER_FLUSH)
+	buffer[i++] = character;
+	return (1);
 }
 
 /**
@@ -73,13 +73,13 @@ int customPutFd(char character, int fd)
  */
 int customPutsFd(char *inputString, int fd)
 {
-    int i = 0;
+	int i = 0;
 
-    if (!inputString)
-        return 0;
-    while (*inputString)
-    {
-        i += customPutFd(*inputString++, fd);
-    }
-    return i;
+	if (!inputString)
+	return (0);
+	while (*inputString)
+	{
+	i += customPutFd(*inputString++, fd);
+	}
+	return (i);
 }
