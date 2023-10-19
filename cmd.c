@@ -39,7 +39,7 @@ char *duplicateChars(char *source, int start, int stop)
         if (source[i] != ':')
             buffer[k++] = source[i];
     buffer[k] = 0;
-    return buf;
+    return buffer;
 }
 
 /**
