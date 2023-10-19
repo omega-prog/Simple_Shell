@@ -45,7 +45,7 @@ ssize_t customInputBuffer(custom_info_t *info, char **buf, size_t *len)
 }
 
 /**
- * customGetInput - gets a line minus the newline
+ * getCustomInput - gets a line minus the newline
  * @info: custom_info_t struct
  *
  * Return: bytes read
