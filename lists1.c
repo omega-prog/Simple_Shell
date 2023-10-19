@@ -94,7 +94,7 @@ custom_list_t *nodeStartsWith(custom_list_t *list, char *prefix, char nextChar)
 
     while (list)
     {
-        p = nodeStartsWith(list->str, *prefix);
+        p = customStartsWith(list->string, prefix);
         if (p && ((nextChar == -1) || (*p == nextChar)))
             return list;
         list = list->next;
