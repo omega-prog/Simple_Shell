@@ -17,12 +17,12 @@ int customShellLoop(custom_info_t *info, char **av)
 		clearCustomInfo(info);
 		if (checkIfInteractive(info))
 			customPuts("$ ");
-		customErrorPutchar(BUF_FLUSH);
+		customErrorPutchar(BUFFER_FLUSH);
 		bytesRead = getCustomInput(info);
 		if (bytesRead != -1)
 		{
 			setCustomInfo(info, av);
-			builtinRet = findCustomBuiltin(info);
+			builtinRet = findCustomBuiltIn(info);
 			if (builtinRet == -1)
 				findCommand(info);
 		}
@@ -32,13 +32,13 @@ int customShellLoop(custom_info_t *info, char **av)
 	}
 	writeCustomHistory(info);
 	freeCustomInfo(info, 1);
-	if (!checkIfInteractive(info) && info->status)
-		exit(info->status);
+	if (!checkIfInteractive(info) && info->executionStatus)
+		exit(info->executionStatus);
 	if (builtinRet == -2)
 	{
-		if (info->errNum == -1)
-			exit(info->status);
-		exit(info->errNum);
+		if (info->errorNumber == -1)
+			exit(info->executionStatus);
+		exit(info->errorNumber);
 	}
 	return (builtinRet);
 }
@@ -67,12 +67,12 @@ int findCustomBuiltIn(custom_info_t *info)
 		{NULL, NULL}
 	};
 
-	for (i = 0; customBuiltinTable[i].name; i++)
+	for (i = 0; customBuiltinTable[i].commandType; i++)
 	{
-		if (customStringCompare(info->argv[0], customBuiltinTable[i].name) == 0)
+		if (customStringCompare(info->argumentVector[0], customBuiltinTable[i].commandType) == 0)
 		{
 			info->lineCount++;
-			builtinRet = customBuiltinTable[i].func(info);
+			builtinRet = customBuiltinTable[i].function(info);
 			break;
 		}
 	}
@@ -90,15 +90,15 @@ void findCommand(custom_info_t *info)
 	char *path = NULL;
 	int i, argumentCount;
 
-	info->path = info->argv[0];
+	info->commandPath = info->argumentVector[0];
 	if (info->lineCountFlag == 1)
 	{
 		info->lineCount++;
 		info->lineCountFlag = 0;
 	}
-	for (i = 0, argumentCount = 0; info->arg[i]; i++)
+	for (i = 0, argumentCount = 0; info->arguments[i]; i++)
 	{
-		if (!isDelimiterCharacter(info->arg[i], " \t\n"))
+		if (!isDelimiterCharacter(info->arguments[i], " \t\n"))
 			argumentCount++;
 	}
 	if (!argumentCount)
@@ -106,20 +106,20 @@ void findCommand(custom_info_t *info)
 		return;
 	}
 
-	path = findCustomPath(info, _getenv(info, "PATH="), info->argv[0]);
+	path = findCustomPath(info, customGetEnv(info, "PATH="), info->argumentVector[0]);
 	if (path)
 	{
-		info->path = path;
+		info->commandPath = path;
 		forkCommand(info);
 	}
 	else
 	{
-		if ((isInteractive(info) || _getenv(info, "PATH=")
-			|| info->argv[0][0] == '/') && isCustomCommand(info, info->argv[0]))
+		if ((checkIfInteractive(info) || customGetEnv(info, "PATH=")
+			|| info->argumentVector[0][0] == '/') && isCustomCommand(info, info->argumentVector[0]))
 			forkCommand(info);
-		else if (*(info->arg) != '\n')
+		else if (*(info->arguments) != '\n')
 		{
-			info->status = 127;
+			info->executionStatus = 127;
 			printCustomError(info, "not found\n");
 		}
 	}
@@ -143,7 +143,7 @@ void forkCommand(custom_info_t *info)
 	}
 	if (childPid == 0)
 	{
-		if (execve(info->path, info->argv, getCustomEnvironment(info)) == -1)
+		if (execve(info->commandPath, info->argumentVector, getCustomEnvironment(info)) == -1)
 		{
 			freeCustomInfo(info, 1);
 			if (errno == EACCES)
@@ -153,11 +153,11 @@ void forkCommand(custom_info_t *info)
 	}
 	else
 	{
-		wait(&(info->status));
-		if (WIFEXITED(info->status))
+		wait(&(info->executionStatus));
+		if (WIFEXITED(info->executionStatus))
 		{
-			info->status = WEXITSTATUS(info->status);
-			if (info->status == 126)
+			info->executionStatus = WEXITSTATUS(info->status);
+			if (info->executionStatus == 126)
 				printCustomError(info, "Permission denied\n");
 		}
 	}
