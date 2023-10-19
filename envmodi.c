@@ -35,18 +35,18 @@ int customUnsetEnvironment(custom_info_t *info, char *var)
 
     while (node)
     {
-        p = nodeStartsWith(node->string, var);
+        p = customStartsWith(node->string, var);
         if (p && *p == '=')
         {
-            info->env_changed = delete_node_at_index(&(info->env), i);
+            info->environmentChanged = deleteCustomNodeAtIndex(&(info->environment), i);
             i = 0;
-            node = info->env;
+            node = info->environment;
             continue;
         }
         node = node->next;
         i++;
     }
-    return info->env_changed;
+    return info->environmentChanged;
 }
 
 /**
@@ -61,7 +61,7 @@ int customUnsetEnvironment(custom_info_t *info, char *var)
 int customSetEnvironment(custom_info_t *info, char *var, char *value)
 {
     char *buf = NULL;
-    list_t *node;
+    custom_list_t *node;
     char *p;
 
     if (!var || !value)
@@ -73,21 +73,21 @@ int customSetEnvironment(custom_info_t *info, char *var, char *value)
     customStringCopy(buf, var);
     customStringConcatenate(buf, "=");
     customStringConcatenate(buf, value);
-    node = info->env;
+    node = info->environment;
     while (node)
     {
-        p = starts_with(node->str, var);
+        p = customStartsWith(node->string, var);
         if (p && *p == '=')
         {
-            free(node->str);
-            node->str = buf;
-            info->env_changed = 1;
+            free(node->string);
+            node->string = buf;
+            info->environmentChanged = 1;
             return 0;
         }
         node = node->next;
     }
-    add_node_end(&(info->env), buf, 0);
+    add_node_end(&(info->environment), buf, 0);
     free(buf);
-    info->env_changed = 1;
+    info->environmentChanged = 1;
     return 0;
 }
