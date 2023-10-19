@@ -19,7 +19,7 @@ char *getCustomHistoryFile(custom_info_t *info)
     buf[0] = 0;
     customStringCopy(buf, dir);
     customStringConcatenate(buf, "/");
-    customStringConcatenate(buf, HIST_FILE);
+    customStringConcatenate(buf, HISTORY_FILE);
     return buf;
 }
 
@@ -44,10 +44,10 @@ int writeCustomHistory(custom_info_t *info)
         return -1;
     for (node = info->history; node; node = node->next)
     {
-        customPutsFd(node->str, fd);
+        customPutsFd(node->string, fd);
         customPutFd('\n', fd);
     }
-    customPutFd(BUF_FLUSH, fd);
+    customPutFd(BUFFER_FLUSH, fd);
     close(fd);
     return 1;
 }
@@ -94,11 +94,11 @@ int readCustomHistory(custom_info_t *info)
     if (last != i)
         buildCustomHistoryList(info, buf + last, linecount++);
     free(buf);
-    info->histcount = linecount;
-    while (info->histcount-- >= HIST_MAX)
+    info->historyCount = linecount;
+    while (info->historyCount-- >= HISTORY_MAX)
         deleteCustomNodeAtIndex(&(info->history), 0);
     renumberCustomHistory(info);
-    return info->histcount;
+    return info->historyCount;
 }
 
 /**
@@ -111,7 +111,7 @@ int readCustomHistory(custom_info_t *info)
  */
 int buildCustomHistoryList(custom_info_t *info, char *buffer, int lineCount)
 {
-    list_t *node = NULL;
+    custom_list_t *node = NULL;
 
     if (info->history)
         node = info->history;
