@@ -16,18 +16,18 @@ int isCommandChain(custom_info_t *info, char *buf, size_t *p)
     {
         buf[j] = 0;
         j++;
-        info->commandBufferType = CMD_OR;
+        info->commandBufferType = COMMAND_OR;
     }
     else if (buf[j] == '&' && buf[j + 1] == '&')
     {
         buf[j] = 0;
         j++;
-        info->commandBufferType = CMD_AND;
+        info->commandBufferType = COMMAND_AND;
     }
     else if (buf[j] == ';') /* found the end of this command */
     {
         buf[j] = 0; /* replace semicolon with null */
-        info->commandBufferType = CMD_CHAIN;
+        info->commandBufferType = COMMAND_CHAIN;
     }
     else
         return 0;
@@ -49,7 +49,7 @@ void checkCommandChain(custom_info_t *info, char *buf, size_t *p, size_t i, size
 {
     size_t j = *p;
 
-    if (info->commandBufferType == CMD_AND)
+    if (info->commandBufferType == COMMAND_AND)
     {
         if (info->executionStatus)
         {
@@ -57,7 +57,7 @@ void checkCommandChain(custom_info_t *info, char *buf, size_t *p, size_t i, size
             j = len;
         }
     }
-    if (info->commandBufferType == CMD_OR)
+    if (info->commandBufferType == COMMAND_OR)
     {
         if (!info->executionStatus)
         {
@@ -78,7 +78,7 @@ void checkCommandChain(custom_info_t *info, char *buf, size_t *p, size_t i, size
 int replaceCustomAlias(custom_info_t *info)
 {
     int i;
-    list_t *node;
+    custom_list_t *node;
     char *p;
 
     for (i = 0; i < 10; i++)
