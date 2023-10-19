@@ -31,13 +31,13 @@ ssize_t customInputBuffer(custom_info_t *info, char **buf, size_t *len)
                 (*buf)[r - 1] = '\0'; /* remove trailing newline */
                 r--;
             }
-            info->linecount_flag = 1;
-            customRemoveComments(*buf);
-            customBuildHistoryList(info, *buf, info->histcount++);
+            info->lineCountFlag = 1;
+            removeComments(*buf);
+            buildCustomHistoryList(info, *buf, info->historyCount++);
             /* if (customStrchr(*buf, ';')) is this a command chain? */
             {
                 *len = r;
-                info->cmd_buf = buf;
+                info->commandBuffer = buf;
             }
         }
     }
@@ -55,9 +55,9 @@ ssize_t customGetInput(custom_info_t *info)
     static char *buf; /* the ';' command chain buffer */
     static size_t i, j, len;
     ssize_t r = 0;
-    char **buf_p = &(info->arg), *p;
+    char **buf_p = &(info->arguments), *p;
 
-    customPutChar(BUF_FLUSH);
+    customPutchar(BUFFER_FLUSH);
     r = customInputBuffer(info, &buf, &len);
     if (r == -1) /* EOF */
         return (-1);
@@ -66,10 +66,10 @@ ssize_t customGetInput(custom_info_t *info)
         j = i; /* init new iterator to current buf position */
         p = buf + i; /* get pointer for return */
 
-        customCheckChain(info, buf, &j, i, len);
+        checkCommandChain(info, buf, &j, i, len);
         while (j < len) /* iterate to semicolon or end */
         {
-            if (customIsChain(info, buf, &j))
+            if (isCommandChain(info, buf, &j))
                 break;
             j++;
         }
@@ -78,7 +78,7 @@ ssize_t customGetInput(custom_info_t *info)
         if (i >= len) /* reached end of buffer? */
         {
             i = len = 0; /* reset position and length */
-            info->cmd_buf_type = CMD_NORM;
+            info->commandBufferType = COMMAND_NORMAL;
         }
 
         *buf_p = p; /* pass back pointer to current command position */
@@ -103,7 +103,7 @@ ssize_t customReadBuffer(custom_info_t *info, char *buf, size_t *i)
 
     if (*i)
         return (0);
-    r = read(info->readfd, buf, READ_BUF_SIZE);
+    r = read(info->readFileDescriptor, buf, READ_BUFFER_SIZE);
     if (r >= 0)
         *i = r;
     return r;
@@ -119,7 +119,7 @@ ssize_t customReadBuffer(custom_info_t *info, char *buf, size_t *i)
  */
 int customGetLine(custom_info_t *info, char **ptr, size_t *length)
 {
-    static char buf[READ_BUF_SIZE];
+    static char buf[READ_BUFFER_SIZE];
     static size_t i, len;
     size_t k;
     ssize_t r = 0, s = 0;
@@ -135,9 +135,9 @@ int customGetLine(custom_info_t *info, char **ptr, size_t *length)
     if (r == -1 || (r == 0 && len == 0))
         return -1;
 
-    c = customStrchr(buf + i, '\n');
+    c = customStringCharacter(buf + i, '\n');
     k = c ? 1 + (unsigned int)(c - buf) : len;
-    new_p = customRealloc(p, s, s ? s + k : k + 1);
+    new_p = customReallocate(p, s, s ? s + k : k + 1);
     if (!new_p) /* MALLOC FAILURE! */
         return p ? free(p), -1 : -1;
 
@@ -162,9 +162,9 @@ int customGetLine(custom_info_t *info, char **ptr, size_t *length)
  *
  * Return: void
  */
-void customSignalIntHandler(int sig_num)
+void customSignalIntHandler(__attribute__((unused))int sig_num)
 {
     customPuts("\n");
     customPuts("$ ");
-    customPutChar(BUF_FLUSH);
+    customPutChar(BUFFER_FLUSH);
 }
