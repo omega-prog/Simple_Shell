@@ -9,11 +9,11 @@
  */
 char *customMemorySet(char *dest, char byte, unsigned int size)
 {
-    unsigned int i;
+	unsigned int i;
 
-    for (i = 0; i < size; i++)
-        dest[i] = byte;
-    return dest;
+	for (i = 0; i < size; i++)
+	dest[i] = byte;
+	return (dest);
 }
 
 /**
@@ -22,13 +22,13 @@ char *customMemorySet(char *dest, char byte, unsigned int size)
  */
 void customFree(char **str_arr)
 {
-    char **arr = str_arr;
+	char **arr = str_arr;
 
-    if (!str_arr)
-        return;
-    while (*str_arr)
-        free(*str_arr++);
-    free(arr);
+	if (!str_arr)
+	return;
+	while (*str_arr)
+	free(*str_arr++);
+	free(arr);
 }
 
 /**
@@ -41,22 +41,22 @@ void customFree(char **str_arr)
  */
 void *customReallocate(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-    char *p;
+	char *p;
 
-    if (!ptr)
-        return malloc(new_size);
-    if (!new_size)
-        return free(ptr), NULL;
-    if (new_size == old_size)
-        return ptr;
+	if (!ptr)
+	return (malloc(new_size));
+	if (!new_size)
+	return (free(ptr), NULL);
+	if (new_size == old_size)
+	return (ptr);
 
-    p = malloc(new_size);
-    if (!p)
-        return NULL;
+	p = malloc(new_size);
+	if (!p)
+	return (NULL);
 
-    old_size = old_size < new_size ? old_size : new_size;
-    while (old_size--)
-        p[old_size] = ((char *)ptr)[old_size];
-    free(ptr);
-    return p;
+	old_size = old_size < new_size ? old_size : new_size;
+	while (old_size--)
+	p[old_size] = ((char *)ptr)[old_size];
+	free(ptr);
+	return (p);
 }
