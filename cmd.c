@@ -17,7 +17,7 @@ int isCustomCommand(custom_info_t *info, char *file_path)
 
 	if (st.st_mode & S_IFREG)
 	{
-		return 1;
+		return (1);
 	}
 	return (0);
 }
