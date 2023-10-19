@@ -50,9 +50,9 @@ int createCustomAlias(custom_info_t *info, char *aliasString)
     if (!position)
         return 1;
     if (!*++position)
-        return unsetCustomAlias(info, aliasString);
+        return removeCustomAlias(info, aliasString);
 
-    unsetCustomAlias(info, aliasString);
+    removeCustomAlias(info, aliasString);
     return (addCustomNodeEnd(&(info->alias), aliasString, 0) == NULL);
 }
 
