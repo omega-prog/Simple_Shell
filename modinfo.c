@@ -30,7 +30,7 @@ void setCustomInfo(custom_info_t *info, char **av)
             info->argumentVector = malloc(sizeof(char *) * 2);
             if (info->argumentVector)
             {
-                info->argumentVector[0] = customStringDuplicate(info->arg);
+                info->argumentVector[0] = customStringDuplicate(info->arguments);
                 info->argumentVector[1] = NULL;
             }
         }
@@ -56,7 +56,7 @@ void freeCustomInfo(custom_info_t *info, int all)
     if (all)
     {
         if (!info->commandBuffer)
-            customFree(info->arguments);
+            free(info->arguments);
         if (info->environment)
             freeCustomList(&(info->environment));
         if (info->history)
@@ -68,6 +68,6 @@ void freeCustomInfo(custom_info_t *info, int all)
         customFreeMemory((void **)info->commandBuffer);
         if (info->readFileDescriptor > 2)
             close(info->readFileDescriptor);
-        customPutchar(BUF_FLUSH);
+        customPutchar(BUFFER_FLUSH);
     }
 }
