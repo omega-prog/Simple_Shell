@@ -50,7 +50,7 @@ ssize_t customInputBuffer(custom_info_t *info, char **buf, size_t *len)
  *
  * Return: bytes read
  */
-ssize_t customGetInput(custom_info_t *info)
+ssize_t getCustomInput(custom_info_t *info)
 {
     static char *buf; /* the ';' command chain buffer */
     static size_t i, j, len;
