@@ -120,7 +120,7 @@ char *duplicateChars(char *, int, int);
 char *findCustomPath(custom_info_t *, char *, char *);
 
 /* custom_shell_loop.c */
-int customShellLoop(char **);
+int customShellLoops(char **);
 
 /* custom_errors.c */
 void customErrorPuts(char *);
