@@ -107,7 +107,7 @@ int replaceCustomAlias(custom_info_t *info)
 int replaceCustomVariables(custom_info_t *info)
 {
     int i = 0;
-    list_t *node;
+    custom_list_t *node;
 
     for (i = 0; info->argumentVector[i]; i++)
     {
