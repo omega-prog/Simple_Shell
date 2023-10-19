@@ -9,7 +9,7 @@
  */
 int main(int argumentCount, char **argumentVector)
 {
-	custom_info_t info[] = { INFO_INIT };
+	custom_info_t info[] = { CUSTOM_INFO_INIT };
 	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
@@ -26,16 +26,16 @@ int main(int argumentCount, char **argumentVector)
 				exit(126);
 			if (errno == ENOENT)
 			{
-				customErrorPuts(av[0]);
+				customErrorPuts(argumentVector[0]);
 				customErrorPuts(": 0: Can't open ");
-				customErrorPuts(av[1]);
+				customErrorPuts(argumentVector[1]);
 				customErrorPutchar('\n');
-				customErrorPutchar(BUF_FLUSH);
+				customErrorPutchar(BUFFER_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
 		}
-		info->readfd = fd;
+		info->readFileDescriptor = fd;
 	}
 	populateEnvironmentList(info);
 	readCustomHistory(info);
