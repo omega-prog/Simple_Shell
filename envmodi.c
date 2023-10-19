@@ -8,13 +8,13 @@
  */
 char **getCustomEnvironment(custom_info_t *info)
 {
-    if (!info->environ || info->env_changed)
+    if (!info->custom_environment || info->environmentChanged)
     {
-        info->environ = list_to_strings(info->env);
-        info->env_changed = 0;
+        info->custom_environment = listToStrings(info->environment);
+        info->environmentChanged = 0;
     }
 
-    return info->environ;
+    return info->custom_environment;
 }
 
 /**
@@ -26,7 +26,7 @@ char **getCustomEnvironment(custom_info_t *info)
  */
 int customUnsetEnvironment(custom_info_t *info, char *var)
 {
-    list_t *node = info->env;
+    custom_list_t *node = info->environment;
     size_t i = 0;
     char *p;
 
@@ -35,7 +35,7 @@ int customUnsetEnvironment(custom_info_t *info, char *var)
 
     while (node)
     {
-        p = starts_with(node->str, var);
+        p = nodeStartsWith(node->string, var);
         if (p && *p == '=')
         {
             info->env_changed = delete_node_at_index(&(info->env), i);
