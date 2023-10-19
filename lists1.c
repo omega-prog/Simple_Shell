@@ -27,7 +27,7 @@ size_t listLength(const custom_list_t *list)
 char **listToStrings(custom_list_t *list)
 {
     custom_list_t *node = list;
-    size_t count = customListLength(list);
+    size_t count = listLength(list);
     size_t i, j;
     char **strArray;
     char *str;
@@ -41,7 +41,7 @@ char **listToStrings(custom_list_t *list)
 
     for (i = 0; node; node = node->next, i++)
     {
-        str = malloc(customStringLength(node->str) + 1);
+        str = malloc(customStringLength(node->string) + 1);
         if (!str)
         {
             for (j = 0; j < i; j++)
@@ -50,7 +50,7 @@ char **listToStrings(custom_list_t *list)
             return NULL;
         }
 
-        customStringCopy(str, node->str);
+        customStringCopy(str, node->string);
         strArray[i] = str;
     }
     strArray[i] = NULL;
@@ -69,7 +69,7 @@ size_t printCustomList(const custom_list_t *list)
 
     while (list)
     {
-        customPutFd(customConvertNumber(list->num, 10, 0), 1);
+        customPutFd(convertInteger(list->number, 10, 0), 1);
         customPutFd(":", 1);
         customPutFd(" ", 1);
         customPutFd(list->str ? list->str : "(nil)", 1);
