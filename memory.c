@@ -8,11 +8,11 @@
  */
 int customFreeMemory(void **ptr_address)
 {
-    if (ptr_address && *ptr_address)
-    {
-        free(*ptr_address);
-        *ptr_address = NULL;
-        return 1;
-    }
-    return 0;
+	if (ptr_address && *ptr_address)
+	{
+	free(*ptr_address);
+	*ptr_address = NULL;
+	return (1);
+	}
+	return (0);
 }
