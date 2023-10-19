@@ -8,7 +8,7 @@
  */
 int checkIfInteractive(custom_info_t *shellInfo)
 {
-    return (isatty(STDIN_FILENO) && shellInfo->readFd <= 2);
+    return (isatty(STDIN_FILENO) && shellInfo->readFileDescriptor <= 2);
 }
 
 /**
