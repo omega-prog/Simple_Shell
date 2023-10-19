@@ -53,7 +53,7 @@ void printCustomError(custom_info_t *info, char *errorString)
  *
  * Return: number of characters printed
  */
-int printCustomDecimal(int input, int fileDescriptor)
+int printDecimal(int input, int fileDescriptor)
 {
     int (*customPutcharFunction)(char) = customPutchar;
     int i, count = 0;
