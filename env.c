@@ -8,8 +8,8 @@
  */
 int customEnvironment(custom_info_t *info)
 {
-    printCustomListString(info->environment);
-    return 0;
+	printCustomListString(info->environment);
+	return (0);
 }
 
 /**
@@ -21,17 +21,17 @@ int customEnvironment(custom_info_t *info)
  */
 char *customGetEnv(custom_info_t *info, const char *variableName)
 {
-    custom_list_t *node = info->environment;
-    char *position;
+	custom_list_t *node = info->environment;
+	char *position;
 
-    while (node)
-    {
-        position = customStartsWith(node->string, variableName);
-        if (position && *position)
-            return position;
-        node = node->next;
-    }
-    return NULL;
+	while (node)
+	{
+		position = customStartsWith(node->string, variableName);
+		if (position && *position)
+			return (position);
+		node = node->next;
+	}
+	return (NULL);
 }
 
 /**
@@ -43,14 +43,14 @@ char *customGetEnv(custom_info_t *info, const char *variableName)
  */
 int customSetEnv(custom_info_t *info)
 {
-    if (info->argumentCount != 3)
-    {
-        customErrorPuts("Incorrect number of arguments\n");
-        return 1;
-    }
-    if (customSetEnvironment(info, info->argumentVector[1], info->argumentVector[2]))
-        return 0;
-    return 1;
+	if (info->argumentCount != 3)
+	{
+		customErrorPuts("Incorrect number of arguments\n");
+		return (1);
+	}
+	if (customSetEnvironment(info, info->argumentVector[1], info->argumentVector[2]))
+		return (0);
+	return (1);
 }
 
 /**
@@ -61,17 +61,17 @@ int customSetEnv(custom_info_t *info)
  */
 int customUnsetEnv(custom_info_t *info)
 {
-    int i;
+	int i;
 
-    if (info->argumentCount == 1)
-    {
-        customErrorPuts("Too few arguments.\n");
-        return 1;
-    }
-    for (i = 1; i <= info->argumentCount; i++)
-        customUnsetEnvironment(info, info->argumentVector[i]);
+	if (info->argumentCount == 1)
+	{
+		customErrorPuts("Too few arguments.\n");
+		return (1);
+	}
+	for (i = 1; i <= info->argumentCount; i++)
+		customUnsetEnvironment(info, info->argumentVector[i]);
 
-    return 0;
+	return (0);
 }
 
 /**
@@ -82,11 +82,11 @@ int customUnsetEnv(custom_info_t *info)
  */
 int populateEnvironmentList(custom_info_t *info)
 {
-    custom_list_t *node = NULL;
-    size_t i;
+	custom_list_t *node = NULL;
+	size_t i;
 
-    for (i = 0; info->custom_environment[i]; i++)
-        addCustomNodeEnd(&node, info->custom_environment[i], 0);
-    info->environment = node;
-    return 0;
+	for (i = 0; info->custom_environment[i]; i++)
+		addCustomNodeEnd(&node, info->custom_environment[i], 0);
+	info->environment = node;
+	return (0);
 }
