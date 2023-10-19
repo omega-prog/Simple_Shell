@@ -156,7 +156,7 @@ void forkCommand(custom_info_t *info)
 		wait(&(info->executionStatus));
 		if (WIFEXITED(info->executionStatus))
 		{
-			info->executionStatus = WEXITSTATUS(info->status);
+			info->executionStatus = WEXITSTATUS(info->executionStatus);
 			if (info->executionStatus == 126)
 				printCustomError(info, "Permission denied\n");
 		}
