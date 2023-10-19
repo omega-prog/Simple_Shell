@@ -130,7 +130,7 @@ int buildCustomHistoryList(custom_info_t *info, char *buffer, int lineCount)
  */
 int renumberCustomHistory(custom_info_t *info)
 {
-    list_t *node = info->history;
+    custom_list_t *node = info->history;
     int i = 0;
 
     while (node)
@@ -138,5 +138,5 @@ int renumberCustomHistory(custom_info_t *info)
         node->num = i++;
         node = node->next;
     }
-    return (info->histcount = i);
+    return (info->historyCount = i);
 }
