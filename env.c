@@ -35,7 +35,7 @@ char *customGetEnv(custom_info_t *info, const char *variableName)
 }
 
 /**
- * customSetEnvironment - Initialize a new environment variable,
+ * customSetEnv - Initialize a new environment variable,
  *             or modify an existing one
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
@@ -48,13 +48,14 @@ int customSetEnv(custom_info_t *info)
 		customErrorPuts("Incorrect number of arguments\n");
 		return (1);
 	}
-	if (customSetEnvironment(info, info->argumentVector[1], info->argumentVector[2]))
+	if (customSetEnvironment(info, info->argumentVector[1],
+				info->argumentVector[2]))
 		return (0);
 	return (1);
 }
 
 /**
- * customUnsetEnvironment - Remove an environment variable
+ * customUnsetEnv - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
