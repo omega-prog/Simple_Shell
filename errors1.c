@@ -8,24 +8,24 @@
  */
 int customErrorAtoi(char *inputString)
 {
-    int i = 0;
-    unsigned long int result = 0;
+	int i = 0;
+	unsigned long int result = 0;
 
-    if (*inputString == '+')
-        inputString++; /* TODO: why does this make main return 255? */
-    for (i = 0; inputString[i] != '\0'; i++)
-    {
-        if (inputString[i] >= '0' && inputString[i] <= '9')
-        {
-            result *= 10;
-            result += (inputString[i] - '0');
-            if (result > INT_MAX)
-                return -1;
-        }
-        else
-            return -1;
-    }
-    return result;
+	if (*inputString == '+')
+	inputString++; /* TODO: why does this make main return 255? */
+	for (i = 0; inputString[i] != '\0'; i++)
+	{
+	if (inputString[i] >= '0' && inputString[i] <= '9')
+	{
+	result *= 10;
+	result += (inputString[i] - '0');
+	if (result > INT_MAX)
+		return (-1);
+	}
+	else
+	return (-1);
+	}
+	return (result);
 }
 
 /**
@@ -37,13 +37,13 @@ int customErrorAtoi(char *inputString)
  */
 void printCustomError(custom_info_t *info, char *errorString)
 {
-    customErrorPuts(info->filename);
-    customErrorPuts(": ");
-    printDecimal(info->lineCount, STDERR_FILENO);
-    customErrorPuts(": ");
-    customErrorPuts(info->argumentVector[0]);
-    customErrorPuts(": ");
-    customErrorPuts(errorString);
+	customErrorPuts(info->filename);
+	customErrorPuts(": ");
+	printDecimal(info->lineCount, STDERR_FILENO);
+	customErrorPuts(": ");
+	customErrorPuts(info->argumentVector[0]);
+	customErrorPuts(": ");
+	customErrorPuts(errorString);
 }
 
 /**
@@ -55,34 +55,34 @@ void printCustomError(custom_info_t *info, char *errorString)
  */
 int printDecimal(int input, int fileDescriptor)
 {
-    int (*customPutcharFunction)(char) = customPutchar;
-    int i, count = 0;
-    unsigned int absoluteValue, current;
+	int (*customPutcharFunction)(char) = customPutchar;
+	int i, count = 0;
+	unsigned int absoluteValue, current;
 
-    if (fileDescriptor == STDERR_FILENO)
-        customPutcharFunction = customErrorPutchar;
-    if (input < 0)
-    {
-        absoluteValue = -input;
-        customPutcharFunction('-');
-        count++;
-    }
-    else
-        absoluteValue = input;
-    current = absoluteValue;
-    for (i = 1000000000; i > 1; i /= 10)
-    {
-        if (absoluteValue / i)
-        {
-            customPutcharFunction('0' + current / i);
-            count++;
-        }
-        current %= i;
-    }
-    customPutcharFunction('0' + current);
-    count++;
+	if (fileDescriptor == STDERR_FILENO)
+	customPutcharFunction = customErrorPutchar;
+	if (input < 0)
+	{
+	absoluteValue = -input;
+	customPutcharFunction('-');
+	count++;
+	}
+	else
+	absoluteValue = input;
+	current = absoluteValue;
+	for (i = 1000000000; i > 1; i /= 10)
+	{
+	if (absoluteValue / i)
+	{
+	customPutcharFunction('0' + current / i);
+	count++;
+	}
+	current %= i;
+	}
+	customPutcharFunction('0' + current);
+	count++;
 
-    return count;
+	return (count);
 }
 
 /**
@@ -95,30 +95,30 @@ int printDecimal(int input, int fileDescriptor)
  */
 char *convertInteger(long int number, int base, int flags)
 {
-    static char *array;
-    static char buffer[50];
-    char sign = 0;
-    char *ptr;
-    unsigned long n = number;
+	static char *array;
+	static char buffer[50];
+	char sign = 0;
+	char *ptr;
+	unsigned long n = number;
 
-    if (!(flags & CONVERT_TO_UNSIGNED) && number < 0)
-    {
-        n = -number;
-        sign = '-';
-    }
-    array = flags & CONVERT_TO_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-    ptr = &buffer[49];
-    *ptr = '\0';
+	if (!(flags & CONVERT_TO_UNSIGNED) && number < 0)
+	{
+	n = -number;
+	sign = '-';
+	}
+	array = flags & CONVERT_TO_LOWERCASE ?
+		"0123456789abcdef" : "0123456789ABCDEF";
+	ptr = &buffer[49];
+	*ptr = '\0';
 
-    do
-    {
-        *--ptr = array[n % base];
-        n /= base;
-    } while (n != 0);
+	do {
+	*--ptr = array[n % base];
+	n /= base;
+	} while (n != 0);
 
-    if (sign)
-        *--ptr = sign;
-    return ptr;
+	if (sign)
+	*--ptr = sign;
+	return (ptr);
 }
 
 /**
@@ -129,12 +129,12 @@ char *convertInteger(long int number, int base, int flags)
  */
 void removeComments(char *inputString)
 {
-    int i;
+	int i;
 
-    for (i = 0; inputString[i] != '\0'; i++)
-        if (inputString[i] == '#' && (!i || inputString[i - 1] == ' '))
-        {
-            inputString[i] = '\0';
-            break;
-        }
+	for (i = 0; inputString[i] != '\0'; i++)
+	if (inputString[i] == '#' && (!i || inputString[i - 1] == ' '))
+	{
+	inputString[i] = '\0';
+		break;
+	}
 }
