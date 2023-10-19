@@ -86,7 +86,7 @@ int customSetEnvironment(custom_info_t *info, char *var, char *value)
         }
         node = node->next;
     }
-    add_node_end(&(info->environment), buf, 0);
+    addCustomNodeEnd(&(info->environment), buf, 0);
     free(buf);
     info->environmentChanged = 1;
     return 0;
