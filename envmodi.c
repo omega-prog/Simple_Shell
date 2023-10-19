@@ -35,7 +35,7 @@ int customUnsetEnvironment(custom_info_t *info, char *var)
 
     while (node)
     {
-        p = customStartsWith(node->str, var);
+        p = customStartsWith(node->string, var);
         if (p && *p == '=')
         {
             info->env_changed = delete_node_at_index(&(info->env), i);
