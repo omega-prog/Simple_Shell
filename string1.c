@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * copyString - copies a string
+ * customStringCopy - copies a string
  * @destination: the destination
  * @source: the source
  *
@@ -12,18 +12,18 @@ char *customStringCopy(char *destination, char *source)
 	int i = 0;
 
 	if (destination == source || source == 0)
-		return destination;
+		return (destination);
 	while (source[i])
 	{
 		destination[i] = source[i];
 		i++;
 	}
 	destination[i] = 0;
-	return destination;
+	return (destination);
 }
 
 /**
- * duplicateString - duplicates a string
+ * customStringDuplicate - duplicates a string
  * @str: the string to duplicate
  *
  * Return: pointer to the duplicated string
@@ -34,19 +34,19 @@ char *customStringDuplicate(const char *str)
 	char *ret;
 
 	if (str == NULL)
-		return NULL;
+		return (NULL);
 	while (*str++)
 		length++;
 	ret = malloc(sizeof(char) * (length + 1));
 	if (!ret)
-		return NULL;
+		return (NULL);
 	for (length++; length--;)
 		ret[length] = *--str;
-	return ret;
+	return (ret);
 }
 
 /**
- * printString - prints an input string
+ * customPuts - prints an input string
  * @str: the string to be printed
  *
  * Return: Nothing
@@ -65,7 +65,7 @@ void customPuts(char *str)
 }
 
 /**
- * writeCharacter - writes the character c to stdout
+ * customPutchar - writes the character c to stdout
  * @c: The character to print
  *
  * Return: On success 1.
@@ -83,5 +83,5 @@ int customPutchar(char c)
 	}
 	if (c != BUFFER_FLUSH)
 		buffer[i++] = c;
-	return 1;
+	return (1);
 }
