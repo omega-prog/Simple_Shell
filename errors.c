@@ -21,7 +21,7 @@ void customErrorPuts(char *inputString)
 
 /**
  * customErrorPutchar - writes the character to stderr
- * @c: The character to print
+ * @character: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
