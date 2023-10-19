@@ -69,11 +69,11 @@ size_t printCustomList(const custom_list_t *list)
 
     while (list)
     {
-        customPutFd(convertInteger(list->number, 10, 0), 1);
-        customPutFd(":", 1);
-        customPutFd(" ", 1);
-        customPutFd(list->str ? list->str : "(nil)", 1);
-        customPutFd("\n", 1);
+        customPuts(convertInteger(list->number, 10, 0), 1);
+        customPutchar(":", 1);
+        customPutchar(" ", 1);
+        customPuts(list->string ? list->string : "(nil)", 1);
+        customPuts("\n", 1);
         list = list->next;
         count++;
     }
@@ -94,7 +94,7 @@ custom_list_t *nodeStartsWith(custom_list_t *list, char *prefix, char nextChar)
 
     while (list)
     {
-        p = customStringCharacter(list->str, *prefix);
+        p = nodeStartsWith(list->str, *prefix);
         if (p && ((nextChar == -1) || (*p == nextChar)))
             return list;
         list = list->next;
