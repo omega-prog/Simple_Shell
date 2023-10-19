@@ -19,7 +19,7 @@ int customEnvironment(custom_info_t *info)
  *
  * Return: the value
  */
-char *customGetEnvironment(custom_info_t *info, const char *variableName)
+char *customGetEnv(custom_info_t *info, const char *variableName)
 {
     custom_list_t *node = info->environment;
     char *position;
