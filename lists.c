@@ -14,10 +14,10 @@ custom_list_t *addCustomNode(custom_list_t **head_ptr, const char *str, int num)
 
     if (!head_ptr)
         return NULL;
-    new_head = (custom_list_t *)malloc(sizeof(list_t));
+    new_head = (custom_list_t *)malloc(sizeof(custom_list_t));
     if (!new_head)
         return NULL;
-    customMemorySet((void *)new_head, 0, sizeof(list_t));
+    customMemorySet((void *)new_head, 0, sizeof(custom_list_t));
     new_head->number = num;
     if (str)
     {
