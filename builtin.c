@@ -20,13 +20,13 @@ int customExit(custom_info_t *info)
 			printCustomError(info, "Illegal number: ");
 			customErrorPuts(info->argumentVector[1]);
 			customErrorPutchar('\n');
-			return 1;
+			return (1);
 		}
 		info->errorNumber = customErrorAtoi(info->argumentVector[1]);
-		return -2;
+		return (-2);
 	}
 	info->errorNumber = -1;
-	return -2;
+	return (-2);
 }
 
 /**
@@ -48,7 +48,8 @@ int customChangeDirectory(custom_info_t *info)
 		targetDirectory = customGetEnv(info, "HOME=");
 		if (!targetDirectory)
 			chdirResult = /* TODO: what should this be? */
-				chdir((targetDirectory = customGetEnv(info, "PWD=")) ? targetDirectory : "/");
+				chdir((targetDirectory = customGetEnv(info,
+								"PWD=")) ? targetDirectory : "/");
 		else
 			chdirResult = chdir(targetDirectory);
 	}
@@ -58,12 +59,13 @@ int customChangeDirectory(custom_info_t *info)
 		{
 			customPuts(currentDirectory);
 			customPutchar('\n');
-			return 1;
+			return (1);
 		}
 		customPuts(customGetEnv(info, "OLDPWD="));
 		customPutchar('\n');
 		chdirResult = /* TODO: what should this be? */
-			chdir((targetDirectory = customGetEnv(info, "OLDPWD=")) ? targetDirectory : "/");
+			chdir((targetDirectory = customGetEnv(info,
+							"OLDPWD=")) ? targetDirectory : "/");
 	}
 	else
 		chdirResult = chdir(info->argumentVector[1]);
@@ -78,7 +80,7 @@ int customChangeDirectory(custom_info_t *info)
 		customSetEnvironment(info, "OLDPWD", customGetEnv(info, "PWD="));
 		customSetEnvironment(info, "PWD", getcwd(buffer, 1024));
 	}
-	return 0;
+	return (0);
 }
 
 /**
@@ -95,5 +97,5 @@ int customHelp(custom_info_t *info)
 	customPuts("Custom help call works. Function not yet implemented\n");
 	if (0)
 		customPuts(*argumentArray); /* Temporary att_unused workaround */
-	return 0;
+	return (0);
 }
