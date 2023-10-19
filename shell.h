@@ -44,9 +44,9 @@ extern char **environ;
  */
 typedef struct custom_list_string
 {
-    int number;
-    char *string;
-    struct custom_list_string *next;
+int number;
+char *string;
+struct custom_list_string *next;
 } custom_list_t;
 
 /**
@@ -73,24 +73,25 @@ typedef struct custom_list_string
  */
 typedef struct custom_pass_info
 {
-    char *arguments;
-    char **argumentVector;
-    char *commandPath;
-    int argumentCount;
-    unsigned int lineCount;
-    int errorNumber;
-    int lineCountFlag;
-    char *filename;
-    custom_list_t *environment;
-    custom_list_t *history;
-    custom_list_t *alias;
-    char **custom_environment;
-    int environmentChanged;
-    int executionStatus;
-    char **commandBuffer; /* pointer to command ; chain buffer, for memory management */
-    int commandBufferType; /* command type ||, &&, ; */
-    int readFileDescriptor;
-    int historyCount;
+char *arguments;
+char **argumentVector;
+char *commandPath;
+int argumentCount;
+unsigned int lineCount;
+int errorNumber;
+int lineCountFlag;
+char *filename;
+custom_list_t *environment;
+custom_list_t *history;
+custom_list_t *alias;
+char **custom_environment;
+int environmentChanged;
+int executionStatus;
+char **commandBuffer;
+/* pointer to command ; chain buffer,for memory management */
+int commandBufferType; /* command type ||, &&, ; */
+int readFileDescriptor;
+int historyCount;
 } custom_info_t;
 
 #define CUSTOM_INFO_INIT \
@@ -104,8 +105,8 @@ typedef struct custom_pass_info
  */
 typedef struct custom_builtin
 {
-    char *commandType;
-    int (*function)(custom_info_t *);
+char *commandType;
+int (*function)(custom_info_t *);
 } custom_builtin_table;
 
 /* custom_shloop.c */
