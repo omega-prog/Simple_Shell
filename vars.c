@@ -8,7 +8,7 @@
  *
  * Return: 1 if it's a chain delimiter, 0 otherwise
  */
-int isCommandChain(info_t *info, char *buf, size_t *p)
+int isCommandChain(custom_info_t *info, char *buf, size_t *p)
 {
     size_t j = *p;
 
@@ -45,13 +45,13 @@ int isCommandChain(info_t *info, char *buf, size_t *p)
  *
  * Return: Void
  */
-void checkCommandChain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
+void checkCommandChain(custom_info_t *info, char *buf, size_t *p, size_t i, size_t len)
 {
     size_t j = *p;
 
     if (info->commandBufferType == CMD_AND)
     {
-        if (info->status)
+        if (info->executionStatus)
         {
             buf[i] = 0;
             j = len;
@@ -59,7 +59,7 @@ void checkCommandChain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
     }
     if (info->commandBufferType == CMD_OR)
     {
-        if (!info->status)
+        if (!info->executionStatus)
         {
             buf[i] = 0;
             j = len;
@@ -75,7 +75,7 @@ void checkCommandChain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replaceCustomAlias(info_t *info)
+int replaceCustomAlias(custom_info_t *info)
 {
     int i;
     list_t *node;
@@ -83,17 +83,17 @@ int replaceCustomAlias(info_t *info)
 
     for (i = 0; i < 10; i++)
     {
-        node = nodeStartsWith(info->alias, info->argv[0], '=');
+        node = nodeStartsWith(info->alias, info->argumentVector[0], '=');
         if (!node)
             return 0;
-        free(info->argv[0]);
-        p = _strchr(node->str, '=');
+        free(info->argumentVector[0]);
+        p = customStringCharacter(node->string, '=');
         if (!p)
             return 0;
-        p = _strdup(p + 1);
+        p = customStringDuplicate(p + 1);
         if (!p)
             return 0;
-        info->argv[0] = p;
+        info->argumentVector[0] = p;
     }
     return 1;
 }
@@ -104,33 +104,33 @@ int replaceCustomAlias(info_t *info)
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replaceCustomVariables(info_t *info)
+int replaceCustomVariables(custom_info_t *info)
 {
     int i = 0;
     list_t *node;
 
-    for (i = 0; info->argv[i]; i++)
+    for (i = 0; info->argumentVector[i]; i++)
     {
-        if (info->argv[i][0] != '$' || !info->argv[i][1])
+        if (info->argumentVector[i][0] != '$' || !info->argumentVector[i][1])
             continue;
 
-        if (!customStringCompare(info->argv[i], "$?"))
+        if (!customStringCompare(info->argumentVector[i], "$?"))
         {
-            replaceCustomString(&(info->argv[i]), customStringDuplicate(convertInteger(info->status, 10, 0)));
+            replaceCustomString(&(info->argumentVector[i]), customStringDuplicate(convertInteger(info->executionStatus, 10, 0)));
             continue;
         }
-        if (!customStringCompare(info->argv[i], "$$"))
+        if (!customStringCompare(info->argumentVector[i], "$$"))
         {
-            replaceCustomString(&(info->argv[i]), customStringDuplicate(convertInteger(getpid(), 10, 0)));
+            replaceCustomString(&(info->argumentVector[i]), customStringDuplicate(convertInteger(getpid(), 10, 0)));
             continue;
         }
-        node = nodeStartsWith(info->env, &info->argv[i][1], '=');
+        node = nodeStartsWith(info->environment, &info->argumentVector[i][1], '=');
         if (node)
         {
-            replaceCustomString(&(info->argv[i]), customStringDuplicate(customStringCharacter(node->str, '=') + 1));
+            replaceCustomString(&(info->argumentVector[i]), customStringDuplicate(customStringCharacter(node->string, '=') + 1));
             continue;
         }
-        replaceCustomString(&info->argv[i], customStringDuplicate(""));
+        replaceCustomString(&info->argumentVector[i], customStringDuplicate(""));
     }
     return 0;
 }
