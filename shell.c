@@ -39,6 +39,6 @@ int main(int argumentCount, char **argumentVector)
 	}
 	populateEnvironmentList(info);
 	readCustomHistory(info);
-	customShellLoop(info, av);
+	customShellLoop(info, argumentVector);
 	return (EXIT_SUCCESS);
 }
