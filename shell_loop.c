@@ -7,7 +7,7 @@
  *
  * Return: 0 on success, 1 on error, or error code
  */
-int customShellLoop(info_t *info, char **av)
+int customShellLoop(custom_info_t *info, char **av)
 {
 	ssize_t bytesRead = 0;
 	int builtinRet = 0;
@@ -52,7 +52,7 @@ int customShellLoop(info_t *info, char **av)
  *			1 if builtin found but not successful,
  *			-2 if builtin signals exit()
  */
-int findCustomBuiltIn(info_t *info)
+int findCustomBuiltIn(custom_info_t *info)
 {
 	int i, builtinRet = -1;
 	custom_builtin_table customBuiltinTable[] = {
@@ -85,7 +85,7 @@ int findCustomBuiltIn(info_t *info)
  *
  * Return: void
  */
-void findCommand(info_t *info)
+void findCommand(custom_info_t *info)
 {
 	char *path = NULL;
 	int i, argumentCount;
@@ -131,7 +131,7 @@ void findCommand(info_t *info)
  *
  * Return: void
  */
-void forkCommand(info_t *info)
+void forkCommand(custom_info_t *info)
 {
 	pid_t childPid;
 
